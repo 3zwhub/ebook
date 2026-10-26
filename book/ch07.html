@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7장 세 개의 스케일링 법칙 — AI, 일의 문법을 바꾸다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('book-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t!=='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-chapter="7">
+
+<div class="progress"><span></span></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" aria-label="목차 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <a class="topbar-title" href="index.html">7장 · 세 개의 스케일링 법칙</a>
+  <button class="icon-btn theme-btn" aria-label="화면 모드 바꾸기 (밝게 · 세피아 · 어둡게)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="책 차례"></nav>
+<div class="scrim"></div>
+
+<main class="page">
+<article class="chapter">
+
+  <header class="chapter-head">
+    <div class="part">2부 · 원리 — 기술은 어떻게 발전하는가</div>
+    <div class="num">07</div>
+    <h1>세 개의<br>스케일링 법칙</h1>
+    <p class="subtitle">AI 발전의 엔진은 어떻게 바뀌어 왔나</p>
+  </header>
+
+  <div class="summary">
+    <span class="label">이 장에서 다루는 것</span>
+    <ul>
+      <li>AI 성능은 연산량, 데이터, 모델 크기를 늘리면 예측 가능한 방식으로 좋아진다. 이것이 '스케일링 법칙'이다.</li>
+      <li>발전의 엔진은 사전학습(1막)에서 사후학습(2막), 추론 시간 연산(3막)으로 옮겨 왔다.</li>
+      <li>각 엔진은 언젠가 한계에 부딪히지만, 지금까지는 새로운 엔진이 그 자리를 이어받아 왔다.</li>
+    </ul>
+  </div>
+
+  <p>지난 몇 년간 AI 업계에서 가장 중요한 질문은 하나였다. "더 키우면 더 좋아지는가?" 놀랍게도 답은 '그렇다'였다. 그것도 막연히 좋아지는 것이 아니라 <em>미리 계산할 수 있을 만큼 규칙적으로</em> 좋아졌다. 이 발견 덕분에 기업들은 수십억, 수백억 달러를 데이터센터에 쏟아부을 수 있었다. 투자하면 어느 정도의 성능이 나올지 예측할 수 있었기 때문이다.</p>
+
+  <p>이 장은 그 '키우기'의 역사를 세 막으로 나눠 살펴본다. 1장에서 본 투자 열기, 2장에서 본 모델 경쟁, 그리고 11장에서 다룰 데이터센터와 전력 문제가 모두 이 장의 이야기에서 출발한다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">7.1</span><span class="t">1막: 사전학습 스케일링</span></h2>
+
+  <p>2020년 1월 OpenAI 연구진은 한 편의 논문을 발표했다. 언어 모델의 성능, 정확히는 다음 토큰 예측의 오차가 세 가지 요소에 따라 매우 규칙적으로 줄어든다는 내용이었다. 모델의 크기(매개변수 수), 학습 데이터의 양, 그리고 학습에 쓴 연산량이다. 셋 중 무엇을 늘리든, 로그 눈금 그래프 위에서 오차는 거의 곧은 직선을 그리며 줄어들었다.<sup class="fn"><a href="#n1" id="r1">1</a></sup> 이것이 <strong>스케일링 법칙(scaling law)</strong>이다.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 360 270" role="img" aria-label="학습 연산량이 늘수록 예측 오차가 로그 눈금에서 직선으로 줄어드는 개념도">
+      <defs><marker id="ah7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" style="fill: var(--ink-faint)"/></marker></defs>
+      <path d="M50 225 H345" class="dg-line" marker-end="url(#ah7)"/>
+      <path d="M50 225 V15" class="dg-line" marker-end="url(#ah7)"/>
+      <path d="M70 48 L330 200" style="stroke: var(--accent); stroke-width: 2.5; fill: none"/>
+      <circle cx="105" cy="68" r="5" style="fill: var(--paper); stroke: var(--accent); stroke-width: 2"/>
+      <circle cx="195" cy="121" r="5" style="fill: var(--paper); stroke: var(--accent); stroke-width: 2"/>
+      <circle cx="285" cy="174" r="5" style="fill: var(--paper); stroke: var(--accent); stroke-width: 2"/>
+      <text class="dg-t" x="115" y="60">GPT-2 (2019)</text>
+      <text class="dg-t" x="205" y="113">GPT-3 (2020)</text>
+      <text class="dg-t" x="295" y="166" text-anchor="middle">GPT-4 (2023)</text>
+      <text class="dg-s" x="345" y="245" text-anchor="end">학습 연산량 → (로그 눈금)</text>
+      <text class="dg-s" x="58" y="22">예측 오차 (로그 눈금)</text>
+      <text class="dg-s" x="198" y="262" text-anchor="middle">점의 위치는 개념을 보여 주기 위한 것이며 실측값이 아니다</text>
+    </svg>
+    <figcaption><span class="t">그림 7-1. 스케일링 법칙 (개념도)</span>연산량을 10배씩 늘릴 때마다 오차가 일정한 비율로 줄어든다.</figcaption>
+  </figure>
+
+  <p>이 법칙이 중요한 이유는 <strong>예측 가능성</strong>이다. 작은 모델 몇 개로 실험해 직선을 그어 보면, 100배 큰 모델을 만들었을 때의 성능을 미리 짐작할 수 있다. 수천억 원짜리 학습을 시작하기 전에 결과를 가늠할 수 있게 된 것이다. 실제로 GPT-2(2019년, 15억 매개변수)에서 GPT-3(2020년, 1,750억 매개변수), GPT-4(2023년)로 이어지는 도약은 이 직선을 따라 연산량을 키운 결과였다.</p>
+
+  <p>2022년 구글 딥마인드는 중요한 수정을 더했다. 그동안 많은 모델이 덩치에 비해 데이터를 너무 적게 학습했다는 것이다. 같은 연산 예산이라면 모델 크기와 데이터 양을 균형 있게 늘려야 하며, 매개변수 하나당 약 20개의 토큰을 학습하는 것이 효율적이라는 결론이었다. 이 연구에서 만든 7백억 매개변수의 모델 'Chinchilla'는 네 배 큰 기존 모델을 능가했다.<sup class="fn"><a href="#n2" id="r2">2</a></sup></p>
+
+  <p>이후 업계는 이 법칙을 믿고 달렸다. 연구기관 Epoch AI에 따르면 최첨단 모델의 학습 연산량은 2020년 이후 <strong>해마다 4~5배씩</strong> 늘었다. 약 5개월마다 두 배가 된 셈이다.<sup class="fn"><a href="#n3" id="r3">3</a></sup> 강화학습의 선구자 리처드 서튼은 2019년 「쓰라린 교훈(The Bitter Lesson)」이라는 짧은 글에서 이렇게 썼다. AI 70년의 역사가 주는 교훈은, 사람의 지식을 정교하게 집어넣는 방법보다 연산을 최대한 활용하는 단순하고 일반적인 방법이 결국 이긴다는 것이다.<sup class="fn"><a href="#n4" id="r4">4</a></sup></p>
+
+  <h3>1막의 한계</h3>
+  <p>그러나 2024년 무렵부터 1막의 엔진은 힘에 부치기 시작했다. 첫 번째 벽은 <strong>데이터</strong>였다. 사람이 쓴 양질의 공개 텍스트는 유한하다. Epoch AI는 공개된 인간 작성 텍스트가 약 300조 토큰 규모이며, 지금 추세라면 2026~2032년 사이에 바닥날 것으로 추정했다.<sup class="fn"><a href="#n5" id="r5">5</a></sup> 두 번째 벽은 <strong>비용</strong>이다. 같은 직선을 따라 한 칸 더 내려가려면 10배의 연산이 필요하다. 10배씩 늘어나는 비용은 금세 천문학적인 수준이 된다.</p>
+
+  <p>2024년 12월, OpenAI 공동 창업자 일리야 수츠케버는 AI 학회 NeurIPS에서 "우리가 아는 사전학습은 끝날 것"이라고 말했다. 인터넷이라는 데이터는 하나뿐이고, 그것을 거의 다 썼다는 이유였다.<sup class="fn"><a href="#n6" id="r6">6</a></sup> 2025년 2월 OpenAI가 내놓은 GPT-4.5는 이 한계를 보여 주는 사례로 자주 언급된다. 사전학습 규모를 크게 키운 모델이었지만 체감 성능 향상은 기대에 못 미쳤고, 매우 높은 가격 때문에 API 제공은 몇 달 만에 종료되었다.</p>
+
+  <p>그렇다고 1막이 끝난 것은 아니다. 2026년에도 GPT-6 Astra는 10만 개가 넘는 GPU로 학습했고, 빅테크의 데이터센터 투자는 오히려 늘었다. 달라진 것은 <em>사전학습에 쓴 돈 1달러당 얻는 성능</em>이 예전 같지 않다는 점이다. 그래서 업계는 다른 엔진을 찾아 나섰고, 사실 그 엔진은 이미 돌아가고 있었다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">7.2</span><span class="t">2막: 사후학습</span></h2>
+
+  <p>사전학습을 마친 모델, 즉 '기반 모델(base model)'은 그 자체로는 쓰기 불편하다. 인터넷의 글을 흉내 내도록 학습했을 뿐이어서, 질문을 던지면 답 대신 비슷한 질문 목록을 이어 쓰기도 한다. 지식은 많지만 대화하는 법을 모르는 셈이다. 이 기반 모델을 쓸모 있는 조수로 다듬는 과정이 <strong>사후학습(post-training)</strong>이다.</p>
+
+  <p>사후학습은 크게 두 단계로 이루어진다. 먼저 사람이 직접 쓴 좋은 질문-답변 예시를 보여 주며 지시를 따르는 법을 가르친다. 이를 지시 미세조정이라고 한다. 다음으로 <strong>사람의 피드백을 이용한 강화학습(RLHF)</strong>을 거친다. 모델이 한 질문에 여러 답을 내면 사람이 어느 것이 더 나은지 고르고, 모델은 사람이 선호하는 방향으로 조정된다. 강아지에게 간식으로 행동을 가르치는 것과 비슷한 원리다.</p>
+
+  <p>효과는 극적이었다. OpenAI가 2022년 발표한 연구에서 사람들은 RLHF를 거친 13억 매개변수의 모델이 쓴 답을, 그보다 100배 넘게 큰 1,750억 매개변수의 GPT-3가 쓴 답보다 더 선호했다.<sup class="fn"><a href="#n7" id="r7">7</a></sup> 모델을 키우지 않고도 쓸모를 크게 높일 수 있다는 것이 증명된 것이다. Anthropic은 같은 해 사람의 평가 대신 '헌법'이라 부르는 원칙 목록을 주고 AI가 스스로 답을 평가·수정하게 하는 <strong>헌법 기반 AI(Constitutional AI)</strong>를 발표했다.<sup class="fn"><a href="#n8" id="r8">8</a></sup> 사람의 손이 덜 가면서도 안전하고 유용한 방향으로 모델을 다듬는 방법이다.</p>
+
+  <aside class="box case">
+    <span class="label">사례</span>
+    <h4>ChatGPT는 새로운 모델이 아니었다</h4>
+    <p>2022년 11월 ChatGPT가 세상을 뒤흔들었을 때, 그 바탕의 기술은 사실 새롭지 않았다. GPT-3는 이미 2020년부터 개발자용 API로 제공되고 있었다. 그러나 2년 동안 일반인의 관심은 거의 없었다. 원하는 결과를 얻으려면 문장의 앞부분을 교묘하게 써 주는 요령이 필요했기 때문이다.</p>
+    <p>ChatGPT는 GPT-3.5 계열 모델에 대화용 사후학습과 RLHF를 더하고, 누구나 쓸 수 있는 채팅 화면을 붙인 것이었다. 기반 모델의 능력은 크게 다르지 않았지만, 사람의 말을 알아듣고 친절하게 답하는 법을 배우자 두 달 만에 사용자 1억 명을 모았다. 같은 지능이라도 <em>어떻게 다듬어 내놓느냐</em>가 가치를 결정한다는 것을 보여 준 사례다.</p>
+  </aside>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">7.3</span><span class="t">3막: 추론 시간 연산</span></h2>
+
+  <p>2024년 9월 OpenAI는 o1이라는 모델과 함께 그래프 두 개를 공개했다. 첫 번째 그래프는 강화학습에 쓴 연산을 늘릴수록 수학 성적이 올라간다는 것이었다. 두 번째가 더 중요했다. 이미 학습이 끝난 모델이라도 <em>답하기 전에 생각하는 시간</em>을 더 주면 성적이 올라간다는 것이었다.<sup class="fn"><a href="#n9" id="r9">9</a></sup> 새로운 스케일링 법칙의 발견이었다. 이를 <strong>추론 시간 연산(test-time compute)</strong> 스케일링이라고 한다.</p>
+
+  <p>사람에 비유하면 쉽다. 같은 사람도 즉답할 때보다 연습장에 풀이를 써 가며 생각할 때 어려운 문제를 더 잘 푼다. 추론 모델은 답을 내기 전에 내부적으로 긴 풀이 과정을 쓴다. 문제를 쪼개고, 가설을 세우고, 계산하고, 틀린 곳을 찾아 다시 시도한다. 이 '생각'에도 토큰이 들기 때문에, 오래 생각할수록 비용과 시간이 늘지만 정확도도 올라간다. 그 원리와 훈련 방법은 8장에서 자세히 다룬다.</p>
+
+  <p>이 변화는 우리가 쓰는 AI 제품에 직접 나타난다. 2장에서 본 '추론 강도(effort)' 설정이 바로 이것이다. 같은 모델이라도 생각하는 양을 조절해 품질과 비용 사이에서 균형을 잡을 수 있다.</p>
+
+  <figure>
+    <div class="bars">
+      <div class="q">Claude Opus 5.5의 추론 강도별 종합 지능 지수</div>
+      <div class="bar"><span>낮음</span><i style="width:42%"></i><span class="p">42</span></div>
+      <div class="bar"><span>중간</span><i style="width:51%"></i><span class="p">51</span></div>
+      <div class="bar"><span>높음</span><i style="width:54%"></i><span class="p">54</span></div>
+      <div class="bar"><span>매우 높음</span><i style="width:56%"></i><span class="p">56</span></div>
+      <div class="bar top"><span>최대</span><i style="width:58%"></i><span class="p">58</span></div>
+    </div>
+    <figcaption><span class="t">그림 7-2. 같은 모델, 다른 생각의 양</span>Artificial Analysis 측정(2026년 10월). 평가 과제당 비용은 '낮음' 약 0.55달러, '최대' 약 6달러였다.<sup class="fn"><a href="#n10" id="r10">10</a></sup></figcaption>
+  </figure>
+
+  <p>3막은 AI 산업의 비용 구조도 바꾸고 있다. 1막에서는 돈이 주로 <em>학습</em>에 들었다. 모델을 한 번 크게 만들어 두면 사용하는 비용은 상대적으로 작았다. 3막에서는 사용자가 질문할 때마다 모델이 오래 생각하므로 <em>사용</em>, 즉 추론에 드는 연산이 폭발적으로 늘어난다. 에이전트가 몇 시간씩 혼자 일하는 시대가 되면 더욱 그렇다. 11장에서 다룰 데이터센터 투자의 상당 부분이 학습보다 추론을 위한 것이 되어 가는 이유다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">7.4</span><span class="t">세 엔진의 지금</span></h2>
+
+  <p>세 막은 순서대로 등장했지만, 앞의 막이 끝나고 다음 막이 시작된 것은 아니다. 지금은 세 엔진이 동시에 돌아가며 서로를 밀어 올린다.</p>
+
+  <figure>
+    <ol class="flow">
+      <li><b>사전학습</b>더 크고 좋은 기반 모델. 2018~2024년 발전을 주도했고, 데이터와 비용의 벽에 부딪혔지만 여전히 토대</li>
+      <li><b>사후학습</b>RLHF에서 검증 가능한 보상을 이용한 강화학습으로. 2024년 이후 투자 비중이 빠르게 증가</li>
+      <li><b>추론 시간 연산</b>답하기 전에 더 오래 생각. 2024년 이후 제품 성능과 비용 구조를 바꾸는 중</li>
+    </ol>
+    <figcaption><span class="t">그림 7-3. AI 발전의 세 엔진</span></figcaption>
+  </figure>
+
+  <p>특히 2막의 무게가 커졌다. 초기 사후학습은 사전학습에 비하면 작은 마무리 작업이었다. 예컨대 DeepSeek R1은 전체 연산의 약 5%만 사후학습에 썼다. 그러나 강화학습으로 추론 능력을 키우는 방법이 자리 잡으면서 사후학습 연산은 빠르게 늘었다. OpenAI의 o1에서 o3로 넘어가는 동안 강화학습 연산은 10배 이상 늘었다는 분석이 있다.<sup class="fn"><a href="#n11" id="r11">11</a></sup></p>
+
+  <p>여기에 숨은 네 번째 엔진도 있다. 바로 <strong>알고리즘 효율</strong>이다. 같은 성능의 모델을 만드는 데 필요한 연산량은 약 8개월마다 절반으로 줄어 왔다.<sup class="fn"><a href="#n12" id="r12">12</a></sup> 하드웨어가 좋아지고, 연산을 더 쏟아붓고, 동시에 같은 연산으로 더 많은 것을 얻는 방법까지 발전하니 성능 향상 속도가 빠를 수밖에 없다. 9장에서 이 효율의 기술을 자세히 다룬다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">7.5</span><span class="t">스케일링은 끝났는가</span></h2>
+
+  <p>"AI 발전이 벽에 부딪혔다"는 주장은 거의 해마다 나왔다. 이 질문에는 양쪽의 논리를 함께 보는 것이 공정하다.</p>
+
+  <p><strong>한계론</strong>의 근거는 이렇다. 사람이 쓴 양질의 데이터는 곧 바닥난다. 사전학습 투자 대비 성능 향상은 줄었다. 강화학습도 수확체감을 보인다. 한 분석에 따르면 강화학습 연산을 100배 늘려야 추론 벤치마크 점수가 33%에서 66%로 오르고, 20%에서 80%로 올리려면 1만 배가 필요하다.<sup class="fn"><a href="#n13" id="r13">13</a></sup> 데이터센터를 지을 전력과 부지도 물리적으로 한정되어 있다.</p>
+
+  <p><strong>지속론</strong>의 근거도 만만치 않다. 4장에서 본 것처럼 AI가 혼자 해낼 수 있는 작업의 길이는 오히려 더 빠르게 늘고 있다. 2026년 9~10월에 나온 모델들은 1년 전 모델보다 거의 모든 지표에서 앞섰다. 데이터가 부족하면 AI가 만든 합성 데이터와 강화학습으로 스스로 연습하는 방법이 있다(10장 참고). 무엇보다 지금까지 하나의 엔진이 힘을 잃을 때마다 새로운 엔진이 등장했다.</p>
+
+  <p class="pull">하나의 곡선이 끝없이 이어진 것이 아니라,<br>하나가 꺾일 때마다 새로운 곡선이 시작되었다.</p>
+
+  <p>가장 그럴듯한 해석은 이렇다. AI 발전은 하나의 매끄러운 법칙이 아니라, 성장했다가 둔화하는 여러 개의 S자 곡선이 계단처럼 이어진 모습이다. 다음 곡선이 무엇일지, 언제 나타날지는 아무도 확실히 모른다. 그러나 지금 이 순간에도 수십만 명의 연구자와 수천억 달러의 자본이 그 다음 곡선을 찾고 있다는 사실만은 분명하다.</p>
+
+  <aside class="box">
+    <span class="label">비즈니스 관점</span>
+    <h4>스케일링 법칙이 실무자에게 주는 세 가지 시사점</h4>
+    <ol>
+      <li><strong>'아직 안 된다'는 판단에는 유통기한이 있다.</strong> 오늘 AI가 못 하는 일도 6~12개월 뒤에 다시 시험해 볼 가치가 있다. 정기적으로 다시 평가하는 일정을 잡아 두자.</li>
+      <li><strong>생각의 양은 조절 가능한 비용이다.</strong> 모든 업무에 최대 추론이 필요하지는 않다. 업무의 중요도에 따라 추론 강도를 나눠 쓰면 비용을 크게 줄일 수 있다.</li>
+      <li><strong>모델은 누구나 쓰지만, 데이터는 우리만 가지고 있다.</strong> 공개 데이터가 고갈될수록 기업 고유의 데이터와 업무 노하우가 경쟁력의 원천이 된다.</li>
+    </ol>
+  </aside>
+
+  <section class="keypoints">
+    <span class="label">핵심 정리</span>
+    <ul>
+      <li>스케일링 법칙은 연산량, 데이터, 모델 크기를 늘리면 성능이 예측 가능하게 좋아진다는 경험 법칙이다. 이 예측 가능성이 막대한 투자를 가능하게 했다.</li>
+      <li>1막(사전학습)은 데이터 고갈과 비용 증가라는 벽에 부딪혔지만 여전히 모든 발전의 토대다.</li>
+      <li>2막(사후학습)은 같은 모델을 훨씬 쓸모 있게 만들었다. ChatGPT의 성공도 새 모델이 아니라 사후학습의 결과였다.</li>
+      <li>3막(추론 시간 연산)은 '오래 생각할수록 똑똑해지는' 축을 열었고, AI 비용의 중심을 학습에서 사용으로 옮기고 있다.</li>
+      <li>AI 발전은 하나의 곡선이 아니라 여러 S자 곡선의 연속이다. 각 엔진의 한계와 새 엔진의 등장을 함께 지켜봐야 한다.</li>
+    </ul>
+  </section>
+
+  <section class="questions">
+    <span class="label">우리 회사라면?</span>
+    <ol>
+      <li>과거에 'AI로는 아직 안 된다'고 판단해 접었던 과제가 있는가? 지금 다시 시험해 본다면 결과가 달라질까?</li>
+      <li>우리 업무 중 '빠르고 저렴한 답'이 필요한 일과 '오래 생각한 정확한 답'이 필요한 일을 나눠 본다면?</li>
+      <li>우리 회사만 가진 데이터는 무엇인가? 그 데이터는 AI가 활용할 수 있는 형태로 정리되어 있는가?</li>
+    </ol>
+  </section>
+
+  <section class="endnotes" aria-label="미주">
+    <span class="label">미주</span>
+    <ol>
+      <li id="n1">Kaplan 외(OpenAI), "Scaling Laws for Neural Language Models", 2020.1. <a class="back" href="#r1">↩</a></li>
+      <li id="n2">Hoffmann 외(DeepMind), "Training Compute-Optimal Large Language Models", 2022.3. Chinchilla(700억 매개변수)는 Gopher(2,800억 매개변수)를 능가했다. <a class="back" href="#r2">↩</a></li>
+      <li id="n3">Epoch AI, "Training compute of frontier AI models grows by 4-5x per year"; Epoch AI, "Trends in AI". 공개된 추정치 중 최대 학습은 Grok 4(2025.7, 약 5×10²⁶ FLOP)이며, 2025년 하반기 이후 폐쇄형 모델의 추정치는 공개되지 않았다. <a class="back" href="#r3">↩</a></li>
+      <li id="n4">Richard Sutton, "The Bitter Lesson", 2019.3. <a class="back" href="#r4">↩</a></li>
+      <li id="n5">Villalobos 외(Epoch AI), "Will we run out of data? Limits of LLM scaling based on human-generated data", 2024 개정판. <a class="back" href="#r5">↩</a></li>
+      <li id="n6">Ilya Sutskever, NeurIPS 2024 'Test of Time' 수상 강연, 2024.12. <a class="back" href="#r6">↩</a></li>
+      <li id="n7">Ouyang 외(OpenAI), "Training language models to follow instructions with human feedback"(InstructGPT), 2022.3. <a class="back" href="#r7">↩</a></li>
+      <li id="n8">Bai 외(Anthropic), "Constitutional AI: Harmlessness from AI Feedback", 2022.12. <a class="back" href="#r8">↩</a></li>
+      <li id="n9">OpenAI, "Learning to Reason with LLMs", 2024.9.12. <a class="back" href="#r9">↩</a></li>
+      <li id="n10">Artificial Analysis, "Claude Opus 5.5" 모델 페이지(2026년 10월 열람). <a class="back" href="#r10">↩</a></li>
+      <li id="n11">Khatri 외, "The Art of Scaling Reinforcement Learning Compute for LLMs", ICLR 2026. DeepSeek R1의 사후학습 비중은 AI2의 사후학습 보고서(Lambert, <i>Reinforcement Learning from Human Feedback</i>) 기준. <a class="back" href="#r11">↩</a></li>
+      <li id="n12">Ho 외(Epoch AI), "Algorithmic Progress in Language Models", 2024. <a class="back" href="#r12">↩</a></li>
+      <li id="n13">Toby Ord의 2025년 말 분석, Marc Bara, "Pre-training Scaling Stopped Being the Whole Recipe"(Medium)에서 재인용. <a class="back" href="#r13">↩</a></li>
+    </ol>
+  </section>
+
+</article>
+<nav class="chapter-nav" id="chapter-nav" aria-label="장 이동"></nav>
+</main>
+
+<script src="assets/book.js"></script>
+</body>
+</html>

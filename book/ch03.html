@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3장 오픈 웨이트, 중국, 그리고 한국의 모델 — AI, 일의 문법을 바꾸다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('book-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t!=='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-chapter="3">
+
+<div class="progress"><span></span></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" aria-label="목차 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <a class="topbar-title" href="index.html">3장 · 오픈 웨이트, 중국, 그리고 한국의 모델</a>
+  <button class="icon-btn theme-btn" aria-label="화면 모드 바꾸기 (밝게 · 세피아 · 어둡게)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="책 차례"></nav>
+<div class="scrim"></div>
+
+<main class="page">
+<article class="chapter">
+
+  <header class="chapter-head">
+    <div class="part">1부 · 지금, 최전선</div>
+    <div class="num">03</div>
+    <h1>오픈 웨이트, 중국,<br>그리고 한국의 모델</h1>
+    <p class="subtitle">프런티어 바로 뒤의 '충분히 좋은' 선택지들</p>
+  </header>
+
+  <div class="summary">
+    <span class="label">이 장에서 다루는 것</span>
+    <ul>
+      <li>누구나 내려받아 쓸 수 있는 '오픈 웨이트' 모델은 최고 폐쇄형 모델을 몇 달 차이로 뒤쫓고 있다.</li>
+      <li>그 선두에는 중국 기업들이 있고, 이들은 가격을 무기로 시장의 판도를 흔들고 있다.</li>
+      <li>한국은 국가 프로젝트로 '독자 AI'를 키우는 중이다. 기업에게 오픈 모델은 보안과 비용 측면에서 진지하게 검토할 만한 선택지가 됐다.</li>
+    </ul>
+  </div>
+
+  <p>2025년 1월 27일 월요일, 미국 반도체 기업 엔비디아의 주가가 하루 만에 17% 가까이 떨어졌다. 시가총액 약 6천억 달러가 사라졌는데, 미국 증시 역사상 한 기업이 하루에 잃은 금액으로는 최대였다. 원인은 그 주에 화제가 된 중국 스타트업 DeepSeek의 추론 모델 R1이었다. DeepSeek은 미국 최고 수준에 근접한 모델을 훨씬 적은 비용으로 만들었다고 주장했고, 모델의 가중치를 누구나 내려받을 수 있게 공개했다. '최고의 AI를 만들려면 천문학적인 돈이 필요하다'는 믿음이 처음으로 흔들린 순간이었다.</p>
+
+  <p>그로부터 1년 9개월이 지난 지금, 'DeepSeek 충격'은 하나의 사건이 아니라 하나의 흐름이 되었다. 공개된 모델의 성능은 폐쇄형 최고 모델을 몇 달 차이로 따라붙었고, 그 선두에는 중국 기업들이 있다. 이 장에서는 오픈 웨이트 모델의 지형과 실력, 중국 모델을 둘러싼 기회와 우려, 한국의 독자 AI 프로젝트, 그리고 기업이 오픈 모델을 고려해야 할 때를 차례로 살펴본다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">3.1</span><span class="t">오픈 웨이트란 무엇인가</span></h2>
+
+  <p>AI 모델은 크게 두 부분으로 이루어진다. 하나는 모델의 구조를 정의한 코드이고, 다른 하나는 학습을 통해 얻은 수십억~수조 개의 숫자, 즉 <strong>가중치(weight)</strong>다. 가중치는 모델이 배운 지식과 능력이 담긴 곳으로, 사실상 모델 그 자체라고 할 수 있다(6장 참고).</p>
+
+  <p>GPT-6나 Claude, Gemini 같은 <strong>폐쇄형 모델</strong>은 가중치를 공개하지 않는다. 사용자는 회사의 서버에 요청을 보내고 답을 받을 뿐이다. 반면 <strong>오픈 웨이트(open-weight) 모델</strong>은 가중치를 공개해 누구나 내려받아 자기 컴퓨터나 서버에서 돌릴 수 있다. 흔히 '오픈소스 AI'라고 부르지만 엄밀히는 다르다. 전통적인 오픈소스는 소스코드 전체를 공개하고 자유로운 사용을 보장하는데, 대부분의 오픈 웨이트 모델은 가중치만 공개하고 학습 데이터와 학습 방법은 공개하지 않는다. 사용 조건도 모델마다 다르다.</p>
+
+  <figure>
+    <div class="table-title">표 3-1. 폐쇄형과 오픈 웨이트 모델의 차이</div>
+    <div class="table-wrap">
+    <table class="book">
+      <thead><tr><th></th><th>폐쇄형</th><th>오픈 웨이트</th></tr></thead>
+      <tbody>
+        <tr><td>사용 방식</td><td>회사 서버에 API나 앱으로 접속</td><td>내려받아 자체 서버나 기기에서 실행, 또는 클라우드 업체를 통해 이용</td></tr>
+        <tr><td>데이터 흐름</td><td>입력 데이터가 모델 회사로 전송됨</td><td>자체 서버에서 돌리면 외부로 나가지 않음</td></tr>
+        <tr><td>맞춤화</td><td>제한적(회사가 허용하는 범위)</td><td>추가 학습으로 자유롭게 조정 가능</td></tr>
+        <tr><td>운영 부담</td><td>거의 없음</td><td>서버, 보안, 업데이트를 직접 관리</td></tr>
+        <tr><td>최고 성능</td><td>현재 선두</td><td>몇 달 뒤처짐</td></tr>
+        <tr><td>대표 라이선스</td><td>이용약관</td><td>MIT, Apache 2.0(상업 이용 자유), 자체 라이선스(조건부)</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </figure>
+
+  <p>라이선스는 실무에서 꼭 확인해야 한다. MIT나 Apache 2.0 라이선스는 상업적 이용과 수정을 거의 제한 없이 허용한다. 반면 일부 모델은 자체 라이선스를 써서 사용자 수가 일정 규모를 넘으면 별도 계약을 요구하거나 특정 용도를 금지한다. '공개'라는 말만 믿고 쓰기 전에 법무팀과 함께 조건을 읽어 봐야 한다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">3.2</span><span class="t">오픈 웨이트 생태계 지도</span></h2>
+
+  <p>2026년 가을 오픈 웨이트 생태계의 특징은 한 문장으로 요약된다. <em>최상위권 대부분이 중국 모델이다.</em> 2024년까지만 해도 이 분야의 대표 주자는 메타의 Llama였다. 그러나 2025년 이후 DeepSeek, 알리바바의 Qwen, 문샷 AI의 Kimi, Z.ai의 GLM 같은 중국 모델들이 성능 순위 상단을 차지했다.</p>
+
+  <figure>
+    <div class="table-title">표 3-2. 주요 오픈 웨이트 모델 (2026년 10월 기준)</div>
+    <div class="table-wrap">
+    <table class="book">
+      <thead><tr><th>모델 계열</th><th>개발사</th><th>특징</th><th>라이선스</th></tr></thead>
+      <tbody>
+        <tr><td>DeepSeek V4</td><td>DeepSeek(중국)</td><td>Pro 1.6조·Flash 2,840억 매개변수, 100만 토큰 컨텍스트. 화웨이 칩 지원</td><td>MIT</td></tr>
+        <tr><td>Qwen 3 계열</td><td>알리바바(중국)</td><td>소형부터 대형까지 가장 다양한 크기. 코딩에 강함. 최상위 Max는 비공개</td><td>Apache 2.0</td></tr>
+        <tr><td>Kimi K2.6 / K3</td><td>문샷 AI(중국)</td><td>K2.6은 1조 매개변수, 이미지·영상 입력. K3는 2.8조 규모로 확대</td><td>수정 MIT / 자체</td></tr>
+        <tr><td>GLM-5 계열</td><td>Z.ai(중국)</td><td>7,440억 매개변수, 에이전트 코딩 벤치마크 상위권</td><td>MIT</td></tr>
+        <tr><td>Mistral Large 3 / Small 4</td><td>미스트랄(프랑스)</td><td>유럽 대표. 기업용 배포와 데이터 주권 강조</td><td>Apache 2.0</td></tr>
+        <tr><td>gpt-oss</td><td>OpenAI(미국)</td><td>2025년 8월 공개. GPT-2 이후 처음 공개한 가중치</td><td>Apache 2.0</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figcaption>매개변수 수와 사양은 각 회사 발표와 2차 정리 자료를 따랐다. 오픈 모델은 출시 주기가 매우 짧아 세부 버전은 수시로 바뀐다.<sup class="fn"><a href="#n1" id="r1">1</a></sup></figcaption>
+  </figure>
+
+  <p>표의 매개변수 숫자가 낯설 수 있다. DeepSeek V4 Pro의 1.6조 개는 엄청난 규모지만, 질문 하나를 처리할 때 실제로 쓰는 것은 그중 약 490억 개뿐이다. 여러 '전문가' 하위 모델 가운데 필요한 것만 골라 쓰는 <strong>전문가 혼합(MoE)</strong> 방식 덕분이다. 덩치는 크지만 운영 비용은 훨씬 작다. 오픈 모델들이 싼값에 높은 성능을 내는 비결 가운데 하나로, 9장에서 자세히 다룬다.</p>
+
+  <p>미국 쪽의 변화도 눈에 띈다. 오픈 웨이트의 상징이던 메타는 2026년 4월 첫 폐쇄형 최상위 모델을 내놓으며 방향을 틀었다. 반대로 폐쇄형의 상징이던 OpenAI는 2025년 8월 gpt-oss를 공개하며 6년 만에 가중치를 내놓았다. 프랑스의 미스트랄은 '유럽의 데이터는 유럽에'라는 메시지로 공공기관과 금융권을 공략하고 있다.</p>
+
+  <aside class="box case">
+    <span class="label">사례</span>
+    <h4>메타는 왜 '열린 AI'의 문을 반쯤 닫았나</h4>
+    <p>메타는 2023년부터 Llama 시리즈를 공개하며 오픈 웨이트 진영의 맏형 역할을 했다. 그러나 2025년 Llama 4가 기대에 못 미치는 평가를 받으면서 상황이 바뀌었다. 메타는 데이터 기업 Scale AI에 약 150억 달러를 투자하고 그 창업자를 영입해 '초지능 연구소(Meta Superintelligence Labs)'를 세웠다. 이 조직이 2026년 4월 8일 내놓은 첫 모델 Muse Spark는 가중치를 공개하지 않는 폐쇄형이었다.<sup class="fn"><a href="#n2" id="r2">2</a></sup></p>
+    <p>메타는 오픈 웨이트를 포기하지 않았다고 말한다. 자사 서비스에는 폐쇄형 최상위 모델을 쓰고, 개발자 생태계에는 별도의 공개 모델을 내놓는 '두 갈래 전략'이라는 설명이다. 다만 가장 강력한 모델은 닫아 두고 한 단계 아래 모델을 공개하는 방식이 될 가능성이 크다. 최고 모델 하나를 만드는 데 수십억 달러가 드는 시대에 그것을 무료로 나눠 주는 일이 얼마나 지속될 수 있는지 보여 주는 사례다.</p>
+  </aside>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">3.3</span><span class="t">격차는 얼마나 좁혀졌나</span></h2>
+
+  <p>오픈 웨이트 모델은 폐쇄형을 얼마나 따라왔을까. 독립 평가 기관 Artificial Analysis가 2026년 4월 말 발표한 분석에 따르면, 최고의 오픈 웨이트 모델(Kimi K2.6, 샤오미 MiMo V2.5 Pro)은 종합 지능 지수 54점으로, 당시 1위였던 OpenAI의 GPT-5.5(60점)보다 6점 낮았다. 구글과 Anthropic의 당시 최상위 모델(57점)과는 3점 차이였다.<sup class="fn"><a href="#n3" id="r3">3</a></sup> 연구기관 Epoch AI는 오픈 모델이 폐쇄형 최고 수준을 <strong>약 4개월</strong> 뒤처져 따라간다고 본다.<sup class="fn"><a href="#n4" id="r4">4</a></sup></p>
+
+  <p>4개월이면 짧아 보이지만, 격차가 고르게 분포하지는 않는다. 같은 분석에서 차이가 가장 크게 벌어진 영역은 두 곳이었다. 하나는 사실 지식의 정확도와 환각 억제, 다른 하나는 터미널에서 여러 단계 작업을 수행하는 에이전트 능력이었다. 에이전트 과제 점수는 폐쇄형 최고 모델이 61%, 오픈 모델은 43~46%였다.<sup class="fn"><a href="#n3" id="r3b">3</a></sup> 정리하면 이렇다. 문서 요약, 번역, 분류, 일반적인 코딩 같은 일상 업무에서는 오픈 모델로도 충분한 경우가 많다. 그러나 정확성이 생명인 업무나 긴 자율 작업에서는 아직 폐쇄형이 앞선다.</p>
+
+  <p class="pull">오픈 모델은 '최고'는 아니지만<br>대부분의 일에 '충분히 좋다'.</p>
+
+  <p>공개 벤치마크가 오픈 모델을 실제보다 좋게 보이게 할 수 있다는 점도 기억해 둘 만하다. 오픈 모델은 공개 벤치마크 점수를 홍보 수단으로 삼는 경우가 많아, 시험 유형에 맞춘 학습이 이루어지기 쉽다. 2장에서 말한 대로 결국 가장 정확한 평가는 우리 업무로 직접 시험해 보는 것이다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">3.4</span><span class="t">중국 모델의 추격과 비용 혁신</span></h2>
+
+  <p>중국 모델이 가장 크게 흔든 것은 성능보다 <strong>가격</strong>이다. DeepSeek이 2026년 4월 공개한 V4 시리즈의 API 가격은 Flash가 입력 100만 토큰당 0.14달러, 출력 0.28달러였다. 상위 모델인 V4 Pro도 입력 1.74달러, 출력 3.48달러로 비슷한 수준의 미국 모델보다 3~10배 저렴했다. 이후 DeepSeek은 V4 Pro에 75% 할인을 상시 적용하겠다고 발표했다.<sup class="fn"><a href="#n5" id="r5">5</a></sup> 2장에서 본 GPT-6 Astra의 출력 가격이 50달러였음을 떠올리면 차이가 확연하다.</p>
+
+  <p>이 가격이 가능한 이유는 여러 가지다. 전문가 혼합 같은 효율적인 구조를 적극적으로 썼고, 중국 내 인건비와 전기료가 상대적으로 낮다. 그리고 미국의 반도체 수출 규제로 최신 엔비디아 칩을 구하기 어려워지자, 적은 연산으로 최대 성능을 뽑아내는 기술에 집중해 왔다. 규제가 오히려 효율 혁신을 자극한 셈이다. V4는 화웨이의 AI 칩 Ascend에서 출시 첫날부터 돌아가도록 최적화되었다.<sup class="fn"><a href="#n5" id="r5b">5</a></sup> 엔비디아 없이도 최상위권 AI를 만들 수 있다는 것을 보여 주려는 의도다(11장 참고).</p>
+
+  <h3>쓸 것인가, 말 것인가</h3>
+  <p>중국 모델에 대한 우려도 분명히 있다. 한국 개인정보보호위원회는 2025년 2월 DeepSeek 앱이 이용자 정보를 중국 기업에 넘긴 사실 등을 확인하고 신규 다운로드를 일시 중단시켰다.<sup class="fn"><a href="#n6" id="r6">6</a></sup> 여러 나라 정부 기관과 기업도 업무용 기기에서 중국 AI 앱 사용을 막았다. 또한 중국 모델은 자국 규제에 따라 정치적으로 민감한 주제에서 답을 회피하거나 특정 관점을 반영하도록 학습되어 있다.</p>
+
+  <p>여기서 구분해야 할 것이 있다. <strong>중국 회사의 앱이나 API를 쓰는 것</strong>과 <strong>공개된 가중치를 내려받아 우리 서버에서 돌리는 것</strong>은 위험의 성격이 전혀 다르다. 앞의 경우 입력한 데이터가 중국 회사의 서버로 간다. 뒤의 경우 데이터는 우리 서버 밖으로 나가지 않는다. 다만 모델에 학습된 편향은 그대로 남고, 가중치 안에 의도적인 결함이 숨어 있을 가능성도 이론적으로는 배제할 수 없다. 실무적인 원칙은 이렇다. 민감한 데이터를 중국 회사의 API로 보내지 않는다. 자체 서버에서 운영하더라도 정치·사회적 판단이 개입되는 업무에는 쓰지 않으며, 보안팀의 검토를 거친다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">3.5</span><span class="t">한국의 모델과 '소버린 AI'</span></h2>
+
+  <p>미국과 중국이 AI를 양분하는 상황에서 다른 나라들은 고민에 빠졌다. 국가의 핵심 기술을 외국 기업의 모델에 전적으로 의존해도 되는가. 이 질문에서 나온 개념이 <strong>소버린 AI(sovereign AI)</strong>, 즉 자국의 데이터와 인프라로 자국이 통제할 수 있는 AI를 갖추자는 것이다.</p>
+
+  <p>한국 정부는 2025년 '독자 AI 파운데이션 모델' 프로젝트, 이른바 '국가대표 AI' 사업을 시작했다. LG AI연구원, 네이버클라우드, NC AI, SK텔레콤, 업스테이지 다섯 팀을 뽑고 단계별 평가로 압축해 나가는 경쟁 방식이다. 2025년 10월에는 엔비디아가 한국에 GPU 26만 장 이상을 공급하기로 하면서, 그중 상당 물량을 이 프로젝트에 배정하기로 했다.<sup class="fn"><a href="#n7" id="r7">7</a></sup></p>
+
+  <ol class="timeline wide" aria-label="독자 AI 파운데이션 모델 프로젝트 경과">
+    <li><span class="d">2025</span><span class="co">출범</span><span class="m">LG AI연구원, 네이버클라우드, NC AI, SK텔레콤, 업스테이지 5팀 선정</span></li>
+    <li><span class="d">2026.1</span><span class="co">1차 평가</span><span class="m">네이버클라우드·NC AI 탈락. 네이버는 점수상 상위권이었으나 '독자성' 기준 미충족 판정</span></li>
+    <li><span class="d">2026.2</span><span class="co">추가 공모</span><span class="m">모티프테크놀로지스 합류</span></li>
+    <li><span class="d">2026.8</span><span class="co">2차 평가</span><span class="m">SK텔레콤(70.6점)·업스테이지(69.9점)·LG AI연구원(69.0점) 통과, 모티프(65.8점) 탈락</span></li>
+    <li><span class="d">2026 말</span><span class="co">3차 평가</span><span class="m">최종 2팀 선정 예정</span></li>
+  </ol>
+
+  <p>이 과정에서 가장 큰 논쟁거리는 '독자성'이었다. 1차 평가에서 네이버클라우드는 종합 점수로는 상위권에 들었지만, 모델의 일부 구성 요소에 중국 모델의 것을 활용했다는 점이 문제가 되어 탈락했다.<sup class="fn"><a href="#n8" id="r8">8</a></sup> 2차 평가에서는 글로벌 벤치마크에서 가장 높은 점수를 받은 모티프가 전문가·사용자 평가를 합산한 결과 근소한 차이로 탈락해 이의를 제기했다.<sup class="fn"><a href="#n9" id="r9">9</a></sup> 2차 평가는 벤치마크 40점, 전문가 평가 35점, 사용자 평가 25점으로 구성되었다.</p>
+
+  <p>이 논쟁은 근본적인 질문을 던진다. 오픈 웨이트 모델과 공개 연구 성과가 넘쳐나는 시대에 '처음부터 우리 힘으로 만든 모델'은 어디까지를 뜻하는가. 그리고 프런티어보다 몇 단계 아래의 국산 모델이 실제로 얼마나 쓰일 것인가. 국산 모델의 강점이 분명한 영역도 있다. 한국어와 한국 문화에 대한 이해, 국내 법·제도에 맞춘 답변, 공공·국방처럼 데이터를 해외로 보낼 수 없는 분야다. LG의 EXAONE, SK텔레콤의 A.X, 업스테이지의 Solar 같은 모델이 이미 국내 기업과 기관에 들어가고 있다. 결국 소버린 AI의 성패는 국가대표 선발전 자체보다 <em>그 모델을 국내 산업이 실제로 얼마나 쓰느냐</em>에 달려 있다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">3.6</span><span class="t">기업이 오픈 모델을 고려해야 할 때</span></h2>
+
+  <p>그렇다면 우리 회사는 폐쇄형 최고 모델만 쓰면 될까, 오픈 모델도 검토해야 할까. 답은 업무에 따라 다르다. 다음 표는 판단의 출발점이다.</p>
+
+  <figure>
+    <div class="table-title">표 3-3. 오픈 웨이트 모델 검토 기준</div>
+    <div class="table-wrap">
+    <table class="book">
+      <thead><tr><th>오픈 모델이 유리한 경우</th><th>폐쇄형이 유리한 경우</th></tr></thead>
+      <tbody>
+        <tr><td>고객 정보, 설계 도면처럼 외부로 보낼 수 없는 데이터를 다룰 때</td><td>최고 수준의 추론이나 긴 자율 작업이 필요할 때</td></tr>
+        <tr><td>매일 수백만 건을 처리해 API 비용이 큰 부담일 때</td><td>사용량이 적거나 들쭉날쭉할 때</td></tr>
+        <tr><td>사내 용어나 특정 업무에 맞게 모델을 추가 학습시키고 싶을 때</td><td>AI 인프라를 운영할 인력이 없을 때</td></tr>
+        <tr><td>인터넷이 끊긴 현장이나 기기 안에서 돌려야 할 때</td><td>최신 기능(음성, 영상, 컴퓨터 조작)이 빨리 필요할 때</td></tr>
+        <tr><td>특정 회사에 대한 의존을 줄이고 싶을 때</td><td>보안 인증과 법적 책임을 공급사에 기대고 싶을 때</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </figure>
+
+  <p>현실에서 많은 기업이 택하는 방식은 둘 중 하나가 아니라 <strong>둘 다</strong>다. 어려운 일은 폐쇄형 최고 모델에, 단순하고 반복적인 대량 업무나 민감한 데이터를 다루는 일은 자체 서버의 오픈 모델에 맡긴다. 요청의 성격에 따라 알맞은 모델로 자동 배분하는 이런 구조를 '모델 라우팅'이라고 부른다. 2장에서 강조한 '한 모델에 묶이지 않는 설계'가 여기서도 핵심이다.</p>
+
+  <p>오픈 모델을 직접 운영하기로 했다면 숨은 비용도 따져 봐야 한다. GPU 서버의 구입이나 임대 비용, 모델을 최적화하고 업데이트할 엔지니어, 보안 점검이 모두 회사 몫이 된다. 사용량이 적다면 API로 폐쇄형 모델을 쓰는 편이 오히려 싸다. 직접 서버를 두지 않고 클라우드 업체가 운영해 주는 오픈 모델을 쓰는 중간 선택지도 있다.</p>
+
+  <section class="keypoints">
+    <span class="label">핵심 정리</span>
+    <ul>
+      <li>오픈 웨이트 모델은 가중치를 공개해 누구나 자체 서버에서 돌릴 수 있는 모델이다. 라이선스 조건은 모델마다 다르므로 확인이 필요하다.</li>
+      <li>2026년 오픈 웨이트의 최상위권은 DeepSeek, Qwen, Kimi, GLM 등 중국 모델이 차지하고 있다. 메타는 폐쇄형으로 일부 선회했고 OpenAI는 가중치 공개를 재개했다.</li>
+      <li>오픈 모델은 폐쇄형 최고 수준을 약 4개월 뒤처져 따라간다. 사실 정확도와 에이전트 능력에서 격차가 가장 크다.</li>
+      <li>중국 모델은 압도적인 가격 경쟁력이 강점이다. 다만 API 사용과 자체 서버 운영은 위험의 성격이 다르다는 점을 구분해야 한다.</li>
+      <li>한국의 독자 AI 프로젝트는 SK텔레콤·업스테이지·LG AI연구원 3파전으로 압축되었고, 연말 최종 2팀이 선정된다.</li>
+    </ul>
+  </section>
+
+  <section class="questions">
+    <span class="label">우리 회사라면?</span>
+    <ol>
+      <li>우리 업무 중 '외부로 보낼 수 없는 데이터' 때문에 AI 활용을 미뤄 온 일이 있는가? 자체 서버의 오픈 모델로 풀 수 있을까?</li>
+      <li>우리 회사의 AI 사용 지침은 해외 AI 서비스, 특히 중국 회사의 서비스에 대해 어떤 기준을 두고 있는가?</li>
+      <li>국산 AI 모델을 써야 하거나 쓰면 유리한 업무가 있다면 무엇인가?</li>
+    </ol>
+  </section>
+
+  <section class="endnotes" aria-label="미주">
+    <span class="label">미주</span>
+    <ol>
+      <li id="n1">Kingy AI, "Best Open-Weight AI Models 2026: Current Shortlist"(2026.8 갱신); Fortune, "DeepSeek V4", 2026.4.24. 매개변수와 라이선스는 각 모델 카드 기준이며 2차 자료를 통해 확인했다. <a class="back" href="#r1">↩</a></li>
+      <li id="n2">StartupHub.ai, "Mark Zuckerberg's Dual-Track AI: Llama 5 Open, Muse Spark Closed", 2026.6.5; NYU Shanghai RITS, "Meta Hasn't Given Up on Open Source". 메타 공식 발표는 직접 확인하지 못했다. <a class="back" href="#r2">↩</a></li>
+      <li id="n3">Artificial Analysis, "Recent open weights model launches", 2026.4.30. 이후 9월 기준으로 격차가 6점 안팎으로 유지된다는 2차 분석도 있으나 확인하지 못했다. <a class="back" href="#r3">↩</a></li>
+      <li id="n4">WhatLLM, "Open source vs proprietary LLMs 2026"(2026.7)에서 인용한 Epoch AI 분석. <a class="back" href="#r4">↩</a></li>
+      <li id="n5">Implicator.ai, "DeepSeek releases V4 Pro and Flash undercutting OpenAI pricing by up to 10x"; TechRepublic, "DeepSeek V4 AI Model Backed by Huawei". 75% 상시 할인은 단일 보도로, 추가 확인이 필요하다. <a class="back" href="#r5">↩</a></li>
+      <li id="n6">개인정보보호위원회, DeepSeek 앱 국내 신규 다운로드 잠정 중단 조치, 2025.2. 이후 개선 조치를 거쳐 2025년 4월 서비스가 재개되었다. <a class="back" href="#r6">↩</a></li>
+      <li id="n7">엔비디아·한국 정부 발표, 2025.10.31(APEC 정상회의 계기). 다음(뉴시스·한국경제 등) 보도 종합. <a class="back" href="#r7">↩</a></li>
+      <li id="n8">뉴시스, "LG·SKT·업스테이지 K-AI 1차 평가 통과…네이버·엔씨 탈락", 2026.1.15; SBS Biz, "국대 AI 선발전…중국산 논란 네이버·NC 탈락". <a class="back" href="#r8">↩</a></li>
+      <li id="n9">파이낸셜뉴스, "'독자 AI' 2차 평가, SK·LG·업스테이지 통과…모티프 탈락", 2026.8.18; 뉴스핌, "독자 AI 파운데이션 모델 2차 평가 SKT 1위", 2026.8.27; 머니투데이, 모티프 이의 제기 보도, 2026.8.27. <a class="back" href="#r9">↩</a></li>
+    </ol>
+  </section>
+
+</article>
+<nav class="chapter-nav" id="chapter-nav" aria-label="장 이동"></nav>
+</main>
+
+<script src="assets/book.js"></script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9장 효율의 기술 — AI, 일의 문법을 바꾸다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('book-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t!=='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-chapter="9">
+
+<div class="progress"><span></span></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" aria-label="목차 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <a class="topbar-title" href="index.html">9장 · 효율의 기술</a>
+  <button class="icon-btn theme-btn" aria-label="화면 모드 바꾸기 (밝게 · 세피아 · 어둡게)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="책 차례"></nav>
+<div class="scrim"></div>
+
+<main class="page">
+<article class="chapter">
+
+  <header class="chapter-head">
+    <div class="part">2부 · 원리 — 기술은 어떻게 발전하는가</div>
+    <div class="num">09</div>
+    <h1>효율의 기술</h1>
+    <p class="subtitle">왜 AI는 계속 싸지는가</p>
+  </header>
+
+  <div class="summary">
+    <span class="label">이 장에서 다루는 것</span>
+    <ul>
+      <li>같은 성능의 AI를 쓰는 비용은 해마다 수 배에서 수십 배씩 떨어지고 있다.</li>
+      <li>그 비결은 전문가 혼합, 증류, 양자화, 캐싱 같은 효율 기술이다. 원리를 알면 AI 비용을 줄이는 방법도 보인다.</li>
+      <li>그러나 단가가 떨어질수록 사용량은 더 빠르게 늘어난다. 회사의 AI 청구서가 줄지 않는 이유다.</li>
+    </ul>
+  </div>
+
+  <p>2022년 말 GPT-3.5 수준의 성능을 쓰려면 100만 토큰당 약 20달러를 내야 했다. 2년이 채 지나지 않아 같은 수준의 성능을 내는 모델의 가격은 약 280분의 1로 떨어졌다.<sup class="fn"><a href="#n1" id="r1">1</a></sup> 어떤 산업에서도 보기 드문 속도다. 반도체 성능이 2년마다 두 배가 된다는 무어의 법칙도 이에 비하면 느리게 느껴진다.</p>
+
+  <p>이 가격 하락은 1부에서 본 AI 확산의 숨은 원동력이다. ChatGPT의 무료 사용자가 수억 명에 이르고, 기업이 수백만 건의 문서를 AI로 처리하고, 에이전트가 몇 시간씩 일할 수 있는 것은 모두 AI가 싸졌기 때문이다. 이 장에서는 그 비결을 하나씩 들여다보고, 그것이 기업의 AI 비용 관리에 주는 의미를 살펴본다.</p>
+
+  <div class="stats">
+    <div class="stat"><b>약 280배</b><span>GPT-3.5 수준 성능의 가격 하락 폭, 2022년 말~2024년 말<sup class="fn"><a href="#n1" id="r1b">1</a></sup></span></div>
+    <div class="stat"><b>연 5~10배</b><span>최상위 모델에서 같은 벤치마크 점수를 얻는 가격의 연간 하락 폭<sup class="fn"><a href="#n2" id="r2">2</a></sup></span></div>
+    <div class="stat"><b>연 약 3배</b><span>하드웨어와 경쟁 효과를 뺀 순수 알고리즘 효율의 개선 속도<sup class="fn"><a href="#n2" id="r2b">2</a></sup></span></div>
+    <div class="stat"><b>최대 95%</b><span>반복되는 입력에 적용되는 캐시 할인율 (Gemini 4 Argon, Claude Opus 5.5 기준)</span></div>
+  </div>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">9.1</span><span class="t">전문가 혼합: 필요한 부분만 깨운다</span></h2>
+
+  <p>종합병원을 떠올려 보자. 환자가 오면 접수처에서 증상을 듣고 알맞은 진료과로 안내한다. 감기 환자를 위해 심장외과, 안과, 정형외과 의사가 모두 모일 필요는 없다. <strong>전문가 혼합(MoE, Mixture of Experts)</strong>은 AI 모델에 이 원리를 적용한 것이다.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 360 230" role="img" aria-label="입력 토큰이 라우터를 거쳐 여덟 명의 전문가 중 두 명에게만 전달되는 전문가 혼합 구조">
+      <rect class="dg-box" x="130" y="10" width="100" height="30" rx="4"/>
+      <text class="dg-t" x="180" y="30" text-anchor="middle">입력 토큰</text>
+      <path class="dg-line" d="M180 40 V62"/>
+      <rect class="dg-host" x="120" y="62" width="120" height="32" rx="16"/>
+      <text class="dg-a" x="180" y="83" text-anchor="middle">라우터 (안내 데스크)</text>
+      <path class="dg-line" d="M180 94 L28 150 M180 94 L72 150 M180 94 L116 150 M180 94 L244 150 M180 94 L288 150 M180 94 L332 150" style="stroke-dasharray: 2 4; opacity: .5"/>
+      <path d="M180 94 L160 150 M180 94 L204 150" style="stroke: var(--accent); stroke-width: 2.4; fill: none"/>
+      <rect class="dg-box" x="12" y="150" width="32" height="40" rx="3"/>
+      <rect class="dg-box" x="56" y="150" width="32" height="40" rx="3"/>
+      <rect class="dg-box" x="100" y="150" width="32" height="40" rx="3"/>
+      <rect class="dg-host" x="144" y="150" width="32" height="40" rx="3"/>
+      <rect class="dg-host" x="188" y="150" width="32" height="40" rx="3"/>
+      <rect class="dg-box" x="228" y="150" width="32" height="40" rx="3"/>
+      <rect class="dg-box" x="272" y="150" width="32" height="40" rx="3"/>
+      <rect class="dg-box" x="316" y="150" width="32" height="40" rx="3"/>
+      <g class="dg-s" text-anchor="middle">
+        <text x="28" y="174">E1</text><text x="72" y="174">E2</text><text x="116" y="174">E3</text>
+        <text x="160" y="174" class="dg-a">E4</text><text x="204" y="174" class="dg-a">E5</text>
+        <text x="244" y="174">E6</text><text x="288" y="174">E7</text><text x="332" y="174">E8</text>
+      </g>
+      <text class="dg-s" x="180" y="218" text-anchor="middle">토큰마다 가장 알맞은 전문가 몇 개만 계산에 참여한다</text>
+    </svg>
+    <figcaption><span class="t">그림 9-1. 전문가 혼합 구조 (개념도)</span>실제 모델에는 수십~수백 개의 전문가가 있다.</figcaption>
+  </figure>
+
+  <p>MoE 모델 안에는 '전문가'라고 불리는 작은 하위 신경망이 여럿 있고, 앞단의 '라우터'가 토큰마다 가장 적합한 전문가 몇 개만 골라 계산을 맡긴다. 3장에서 본 DeepSeek V4 Pro는 전체 매개변수가 1조 6천억 개지만, 토큰 하나를 처리할 때 실제로 계산에 참여하는 것은 약 490억 개, 전체의 3% 정도다. 미스트랄의 Small 4는 1,190억 개 중 65억 개만 쓴다.<sup class="fn"><a href="#n3" id="r3">3</a></sup> 덩치가 큰 만큼 많은 지식을 담을 수 있으면서도, 계산 비용은 작은 모델 수준으로 유지하는 것이다.</p>
+
+  <p>구글의 Gemini 3도 이 구조를 썼다고 밝혔고, 오늘날 최상위 모델의 상당수가 MoE를 쓰는 것으로 알려져 있다. 단점도 있다. 계산에 참여하지 않는 전문가들도 언제든 불려 나올 수 있도록 메모리에 올려 두어야 하므로 많은 메모리가 필요하다. 학습도 까다롭다. 라우터가 특정 전문가에게만 일을 몰아주지 않도록 균형을 맞추는 기술이 필요하다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">9.2</span><span class="t">증류: 큰 모델이 작은 모델을 가르친다</span></h2>
+
+  <p>2장에서 본 GPT-6 Luna, Claude Haiku 5.5, Gemini Flash-Lite 같은 소형 모델은 어떻게 작은 몸집으로 꽤 높은 성능을 낼까. 핵심 기술 중 하나가 <strong>증류(distillation)</strong>다. 크고 똑똑한 '교사 모델'이 내놓은 답과 풀이를 작은 '학생 모델'이 학습하는 방식이다.</p>
+
+  <p>학생 모델이 인터넷의 원본 데이터만으로 배우면, 정답이 무엇인지만 알 뿐 왜 그런지는 알기 어렵다. 반면 교사 모델의 출력에는 훨씬 풍부한 정보가 담겨 있다. 정답 외에 다른 후보들이 얼마나 그럴듯한지, 문제를 어떤 순서로 풀어야 하는지까지 담겨 있다. 숙련된 선배가 정답만 알려 주지 않고 풀이 과정과 판단 근거까지 가르쳐 주는 것과 같다. DeepSeek은 R1의 추론 능력을 Qwen과 Llama 기반의 작은 모델들에 증류해 함께 공개했는데, 이 작은 모델들은 몸집이 수십 배 큰 이전 세대 모델보다 수학 성적이 좋았다.<sup class="fn"><a href="#n4" id="r4">4</a></sup></p>
+
+  <p>증류는 논란의 중심이 되기도 한다. 2025년 초 OpenAI는 DeepSeek이 자사 모델의 출력을 무단으로 증류에 이용했다는 정황이 있다고 주장했다. 대부분의 AI 회사는 이용약관에서 자사 모델의 출력으로 경쟁 모델을 학습시키는 것을 금지한다. 그러나 공개된 API로 대량의 답을 받아 가는 것을 막기는 기술적으로 어렵다. 최고 모델을 만드는 데는 수십억 달러가 들지만 그것을 흉내 내는 데는 훨씬 적은 돈이 든다는 사실이, 프런티어 기업들이 가장 강한 모델을 일반에 바로 공개하기를 꺼리는 이유 가운데 하나다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">9.3</span><span class="t">양자화: 숫자를 덜 정밀하게</span></h2>
+
+  <p>6장에서 모델은 수천억 개의 숫자, 즉 가중치로 이루어져 있다고 했다. 보통 이 숫자 하나는 16비트로 저장한다. 원주율을 3.14159265로 적는 것과 같은 정밀도다. 그런데 대부분의 계산에는 3.14 정도면 충분하다. 가중치를 8비트나 4비트로 덜 정밀하게 저장하는 기술을 <strong>양자화(quantization)</strong>라고 한다.</p>
+
+  <figure>
+    <div class="table-title">표 9-1. 매개변수 700억 개 모델의 정밀도별 메모리 크기</div>
+    <div class="table-wrap">
+    <table class="book">
+      <thead><tr><th>정밀도</th><th class="num">메모리</th><th>돌릴 수 있는 곳</th></tr></thead>
+      <tbody>
+        <tr><td>16비트</td><td class="num">약 140GB</td><td>고성능 GPU 여러 장이 달린 서버</td></tr>
+        <tr><td>8비트</td><td class="num">약 70GB</td><td>고성능 GPU 1~2장</td></tr>
+        <tr><td>4비트</td><td class="num">약 35GB</td><td>고사양 워크스테이션, 일부 노트북</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figcaption>모델 가중치만의 크기다. 실제 실행에는 추가 메모리가 필요하다.</figcaption>
+  </figure>
+
+  <p>정밀도를 4분의 1로 낮추면 메모리도 4분의 1로 줄어든다. 메모리에서 숫자를 읽어 오는 시간이 줄어 답하는 속도도 빨라진다. 성능은 조금 떨어지지만, 잘 설계된 양자화는 그 손실을 대부분의 업무에서 느끼기 어려운 수준으로 줄인다. 최근에는 아예 학습 단계부터 8비트 같은 낮은 정밀도로 계산해 학습 비용을 줄이는 방법도 널리 쓰인다. 12장에서 다룰 노트북과 스마트폰 안의 AI는 이 기술 없이는 불가능하다.</p>
+
+  <aside class="box case">
+    <span class="label">사례</span>
+    <h4>600만 달러짜리 최상위 모델?</h4>
+    <p>2024년 12월 DeepSeek은 V3 모델의 기술 보고서를 공개하며, 최종 학습에 엔비디아 H800 GPU 약 278만 시간, 금액으로 약 560만 달러가 들었다고 밝혔다. 비슷한 수준의 미국 모델들이 수억 달러를 썼다고 알려진 것과 비교하면 놀라운 숫자였다. 비결은 이 장에서 다룬 기술들의 조합이었다. 전문가 혼합으로 계산량을 줄였고, 8비트 정밀도로 학습해 메모리와 시간을 아꼈으며, 어텐션의 메모리 사용을 줄이는 독자 기법을 더했다.<sup class="fn"><a href="#n5" id="r5">5</a></sup></p>
+    <p>다만 이 숫자는 마지막 학습 한 번의 GPU 임대료만 계산한 것이다. 그 전의 수많은 실험, 연구 인력, 장비 구입비는 빠져 있다. 그럼에도 이 사례는 업계에 분명한 메시지를 던졌다. 최상위 AI를 만드는 데 꼭 천문학적인 돈만 필요한 것은 아니며, 효율이 곧 경쟁력이라는 것이다. 한 달 뒤 공개된 R1이 엔비디아 주가를 흔든 배경에는 이 보고서가 있었다.</p>
+  </aside>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">9.4</span><span class="t">답을 내는 과정의 최적화</span></h2>
+
+  <p>모델을 만든 뒤 실제로 답을 내는 과정, 즉 추론 단계에도 효율 기술이 많이 쓰인다. 실무자가 알아 두면 비용을 줄이는 데 직접 도움이 되는 것 두 가지를 소개한다.</p>
+
+  <h3>캐싱: 같은 계산은 다시 하지 않는다</h3>
+  <p>모델은 입력을 읽을 때 각 토큰에 대한 중간 계산 결과를 만든다. 같은 입력이 반복되면 이 결과를 저장해 두었다가 다시 쓸 수 있다. 이것이 <strong>프롬프트 캐싱</strong>이다. 예를 들어 100쪽짜리 회사 규정을 앞에 붙이고 직원들이 각자 다른 질문을 한다면, 규정 부분은 처음 한 번만 계산하고 이후에는 저장된 결과를 쓴다. AI 회사들은 캐시된 입력에 큰 할인을 준다. Claude Opus 5.5는 캐시된 입력을 정가의 5% 수준인 100만 토큰당 0.2달러에 제공하고, Gemini 4 Argon도 95% 할인을 적용한다.<sup class="fn"><a href="#n6" id="r6">6</a></sup></p>
+
+  <p>실무 요령은 간단하다. 매번 바뀌지 않는 긴 내용, 즉 지시문, 참고 문서, 예시를 입력의 <em>앞쪽</em>에 고정해 두고, 바뀌는 질문은 <em>뒤쪽</em>에 붙인다. 이것만으로 반복 업무의 AI 비용을 크게 줄일 수 있다.</p>
+
+  <h3>추측 디코딩: 초안은 빠르게, 검토는 정확하게</h3>
+  <p>큰 모델은 토큰을 하나씩 만들 때마다 무거운 계산을 해야 한다. <strong>추측 디코딩(speculative decoding)</strong>은 작고 빠른 모델이 다음 몇 개 토큰을 미리 추측해 초안을 쓰고, 큰 모델은 그 초안이 맞는지 한꺼번에 검토하는 방식이다. 쉬운 부분은 작은 모델의 추측이 대부분 맞으므로 큰 모델은 확인만 하면 된다. 결과물의 품질은 큰 모델과 똑같으면서 속도는 몇 배 빨라진다. 신입이 초안을 쓰고 선임이 빠르게 검토하는 것과 비슷하다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">9.5</span><span class="t">긴 컨텍스트와 기억</span></h2>
+
+  <p>2장에서 최상위 모델의 컨텍스트 창이 100만 토큰에 이르렀다고 했다. 2023년 초만 해도 수천 토큰 수준이었으니 몇백 배 늘어난 셈이다. 이것은 쉬운 일이 아니었다. 6장에서 본 어텐션은 모든 토큰이 다른 모든 토큰을 살피는 방식이라, 입력이 두 배로 길어지면 계산량은 네 배로 늘어난다. 연구자들은 모든 토큰 쌍을 다 보지 않고 중요한 부분에 집중하는 방법, 중간 계산 결과를 압축해 저장하는 방법 등으로 이 문제를 풀어 왔다.</p>
+
+  <p>그러나 '읽을 수 있다'와 '잘 활용한다'는 다르다. 연구에 따르면 언어 모델은 긴 입력의 처음과 끝에 있는 정보는 잘 활용하지만, 가운데 묻힌 정보는 놓치는 경향이 있다.<sup class="fn"><a href="#n7" id="r7">7</a></sup> 최신 모델은 이 문제를 많이 개선했지만, 긴 문서를 통째로 넣을 때는 여전히 주의가 필요하다. 중요한 지시는 앞이나 뒤에 두고, 필요한 부분만 골라 넣는 편이 대개 더 정확하고 싸다. 6장의 RAG가 컨텍스트 창이 커진 지금도 여전히 쓰이는 이유다.</p>
+
+  <p>몇 시간, 며칠에 걸친 작업에서는 컨텍스트 창도 결국 가득 찬다. 그래서 최신 에이전트는 사람처럼 <strong>기억을 관리</strong>한다. 오래된 대화는 요약해 압축하고, 중요한 결정과 진행 상황은 별도의 메모 파일에 적어 두었다가 필요할 때 다시 읽는다. 어떤 정보를 언제 컨텍스트에 넣고 뺄지 설계하는 일을 '컨텍스트 엔지니어링'이라고 부르며, 에이전트 개발에서 모델 선택만큼 중요한 기술이 되었다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">9.6</span><span class="t">싸지는데 왜 청구서는 늘어나는가</span></h2>
+
+  <p>지금까지 본 기술들 덕분에 같은 성능의 AI를 쓰는 비용은 해마다 크게 떨어진다. Epoch AI는 2025년 초 분석에서 같은 벤치마크 점수를 얻는 비용이 과제에 따라 해마다 9배에서 900배까지 떨어진다고 추정했다. 최상위 모델만 보면 연 5~10배 정도라는 더 보수적인 분석도 있다.<sup class="fn"><a href="#n2" id="r2c">2</a></sup> 그런데 많은 기업의 AI 청구서는 오히려 늘어나고 있다. 왜일까.</p>
+
+  <p>19세기 영국의 경제학자 윌리엄 제번스는 증기기관의 석탄 효율이 좋아지자 석탄 소비가 오히려 늘어나는 현상을 관찰했다. 효율이 좋아져 비용이 떨어지면 전에는 수지가 맞지 않던 곳에까지 쓰임새가 퍼지기 때문이다. 이를 <strong>제번스의 역설</strong>이라고 한다. AI도 똑같다. 토큰 단가가 떨어지자 기업들은 더 많은 업무에 AI를 쓰기 시작했다. 7장에서 본 추론 모델은 답 하나에 예전보다 훨씬 많은 토큰을 쓰며, 에이전트는 몇 시간 동안 수백만 토큰을 소비한다. 게다가 최상위 모델의 가격은 크게 내려가지 않는다. 가장 좋은 성능을 원하는 수요가 늘 있기 때문이다.</p>
+
+  <p class="pull">AI가 싸질수록 우리는 AI를 더 많이 쓴다.<br>비용 관리는 단가가 아니라 사용 방식의 문제다.</p>
+
+  <aside class="box">
+    <span class="label">실무 가이드</span>
+    <h4>AI 비용을 줄이는 다섯 가지 방법</h4>
+    <ol>
+      <li><strong>업무에 맞는 등급을 쓴다.</strong> 단순 분류와 요약은 소형 모델, 어려운 분석만 최상위 모델에 맡긴다(2장 참고).</li>
+      <li><strong>추론 강도를 조절한다.</strong> 같은 모델도 '생각의 양'에 따라 비용이 열 배 넘게 차이 난다(7장 참고).</li>
+      <li><strong>캐싱을 활용한다.</strong> 고정된 지시문과 참고 문서는 입력의 앞쪽에 둔다.</li>
+      <li><strong>필요한 것만 넣는다.</strong> 문서 전체보다 관련 부분만 골라 넣는 것이 대개 더 싸고 정확하다.</li>
+      <li><strong>사용량을 측정한다.</strong> 부서별·업무별 토큰 사용량을 추적해야 어디서 비용이 새는지 알 수 있다.</li>
+    </ol>
+  </aside>
+
+  <section class="keypoints">
+    <span class="label">핵심 정리</span>
+    <ul>
+      <li>같은 성능의 AI를 쓰는 비용은 해마다 수 배에서 수십 배씩 떨어지고 있다. 이것이 AI 확산의 숨은 원동력이다.</li>
+      <li>전문가 혼합은 거대한 모델 중 필요한 부분만 계산에 쓰고, 증류는 큰 모델의 능력을 작은 모델에 옮기며, 양자화는 숫자의 정밀도를 낮춰 메모리와 속도를 아낀다.</li>
+      <li>캐싱과 추측 디코딩은 답을 내는 과정의 비용과 시간을 줄인다. 캐싱은 실무자가 직접 활용할 수 있는 절약 수단이다.</li>
+      <li>컨텍스트 창은 100만 토큰 수준으로 커졌지만, 긴 입력의 가운데를 놓치는 문제와 기억 관리는 여전히 중요한 과제다.</li>
+      <li>단가가 떨어지면 사용량이 더 빨리 늘어난다(제번스의 역설). 비용 관리는 단가보다 사용 방식에 달려 있다.</li>
+    </ul>
+  </section>
+
+  <section class="questions">
+    <span class="label">우리 회사라면?</span>
+    <ol>
+      <li>우리 회사의 AI 비용은 지난 1년 동안 어떻게 변했는가? 단가 하락과 사용량 증가 중 어느 쪽이 더 컸는가?</li>
+      <li>같은 지시문과 참고 문서를 반복해서 쓰는 업무가 있다면, 캐싱으로 비용을 줄일 수 있을까?</li>
+      <li>보안 때문에 외부 AI를 쓰지 못하는 업무가 있다면, 양자화한 소형 모델을 사내 장비에서 돌리는 방안을 검토해 볼 만한가?</li>
+    </ol>
+  </section>
+
+  <section class="endnotes" aria-label="미주">
+    <span class="label">미주</span>
+    <ol>
+      <li id="n1">Stanford HAI, <i>AI Index Report 2025</i>. 2022년 11월~2024년 10월 사이 MMLU 기준 GPT-3.5 수준 성능의 가격 변화. 2차 자료를 통해 확인했다. <a class="back" href="#r1">↩</a></li>
+      <li id="n2">Epoch AI, "LLM inference prices have fallen rapidly but unequally across tasks", 2025.3(연 9~900배, 중앙값 50배); Gundlach 외(MIT), "The Price of Progress", arXiv 2511.23455(2026.3 개정, 최상위 모델 연 5~10배, 알고리즘 효율 연 약 3배). 측정 방식과 기간이 달라 수치를 직접 비교하기는 어렵다. <a class="back" href="#r2">↩</a></li>
+      <li id="n3">Kingy AI, "Best Open-Weight AI Models 2026"의 모델 사양 정리. <a class="back" href="#r3">↩</a></li>
+      <li id="n4">DeepSeek-AI, "DeepSeek-R1", 2025.1. R1-Distill 모델군(15억~700억 매개변수). <a class="back" href="#r4">↩</a></li>
+      <li id="n5">DeepSeek-AI, "DeepSeek-V3 Technical Report", 2024.12. H800 GPU 278만 8천 시간, 시간당 2달러 가정 시 약 557만 6천 달러. <a class="back" href="#r5">↩</a></li>
+      <li id="n6">Artificial Analysis, Claude Opus 5.5 모델 페이지; ComputingForGeeks, "Gemini 4 Argon Pricing". 2장 표 2-3 참고. <a class="back" href="#r6">↩</a></li>
+      <li id="n7">Liu 외, "Lost in the Middle: How Language Models Use Long Contexts", 2023. <a class="back" href="#r7">↩</a></li>
+    </ol>
+  </section>
+
+</article>
+<nav class="chapter-nav" id="chapter-nav" aria-label="장 이동"></nav>
+</main>
+
+<script src="assets/book.js"></script>
+</body>
+</html>

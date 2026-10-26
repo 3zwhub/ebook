@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1장 2026년 가을, AI는 어디에 와 있나 — AI, 일의 문법을 바꾸다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('book-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t!=='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-chapter="1">
+
+<div class="progress"><span></span></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" aria-label="목차 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <a class="topbar-title" href="index.html">1장 · 2026년 가을, AI는 어디에 와 있나</a>
+  <button class="icon-btn theme-btn" aria-label="화면 모드 바꾸기 (밝게 · 세피아 · 어둡게)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="책 차례"></nav>
+<div class="scrim"></div>
+
+<main class="page">
+<article class="chapter">
+
+  <header class="chapter-head">
+    <div class="part">1부 · 지금, 최전선</div>
+    <div class="num">01</div>
+    <h1>2026년 가을,<br>AI는 어디에 와 있나</h1>
+    <p class="subtitle">물어보는 도구에서 일을 맡기는 동료로</p>
+  </header>
+
+  <div class="summary">
+    <span class="label">이 장에서 다루는 것</span>
+    <ul>
+      <li>ChatGPT 이후 4년 동안 AI는 놀라움 → 확산 → 실행의 단계를 거쳐 왔다.</li>
+      <li>지금 일어나는 변화는 세 가지 이동으로 요약된다. 대화에서 실행으로, 텍스트에서 멀티모달로, 클라우드에서 어디서나로.</li>
+      <li>돈은 역사상 유례없는 규모로 몰리지만, 조직 차원의 성과는 아직 일부 기업에서만 확인된다. 이 간극을 이해하는 것이 이 책의 출발점이다.</li>
+    </ul>
+  </div>
+
+  <p>2022년 11월 30일, OpenAI가 ChatGPT라는 이름의 '연구 미리보기'를 공개했다. 회사 내부에서도 큰 기대를 걸지 않은 출시였다. 그로부터 4년이 채 지나지 않은 2026년 초, ChatGPT의 주간 사용자는 약 9억 명으로 추산된다.<sup class="fn"><a href="#n1" id="r1">1</a></sup> 인류 열 명 중 한 명 이상이 매주 한 번은 AI와 대화하는 셈이다.</p>
+
+  <p>그러나 사용자 수보다 더 크게 바뀐 것은 AI를 <em>어떻게</em> 쓰느냐다. 4년 전 사람들은 AI에게 질문을 던지고 답을 읽었다. 지금은 AI에게 일을 맡기고 결과를 검토한다. 코드를 고쳐 달라고 하면 AI가 직접 파일을 열고 수정하고 테스트까지 돌린다. 시장 조사를 부탁하면 수십 개의 웹 페이지를 스스로 찾아 읽고 보고서를 써 온다. 이 장은 그 변화가 어떤 경로를 거쳐 여기까지 왔는지, 지금 어디에 서 있는지를 조감한다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">1.1</span><span class="t">4년 만에 바뀐 풍경</span></h2>
+
+  <p>지난 4년을 돌아보면 해마다 성격이 뚜렷이 달랐다. 주요 사건을 먼저 연표로 정리해 보자.</p>
+
+  <ol class="timeline wide" aria-label="2022~2026 주요 사건">
+    <li><span class="d">2022.11</span><span class="co">OpenAI</span><span class="m">ChatGPT 공개</span></li>
+    <li><span class="d">2023.3</span><span class="co">OpenAI</span><span class="m">GPT-4 출시. 전문 시험에서 상위권 성적</span></li>
+    <li><span class="d">2024.5</span><span class="co">OpenAI</span><span class="m">GPT-4o. 보고 듣고 말하는 실시간 대화</span></li>
+    <li><span class="d">2024.9</span><span class="co">OpenAI</span><span class="m">o1. '생각하고 답하는' 추론 모델의 등장</span></li>
+    <li><span class="d">2024.11</span><span class="co">Anthropic</span><span class="m">MCP 공개. AI와 외부 도구를 잇는 표준</span></li>
+    <li><span class="d">2025.1</span><span class="co">DeepSeek</span><span class="m">R1 공개. 저비용 고성능 오픈 모델의 충격</span></li>
+    <li><span class="d">2025.2</span><span class="co">Anthropic</span><span class="m">Claude Code. 코딩 에이전트 시대의 개막</span></li>
+    <li><span class="d">2025.8</span><span class="co">OpenAI</span><span class="m">GPT-5 출시</span></li>
+    <li><span class="d">2025.11</span><span class="co">Google</span><span class="m">Gemini 3 Pro 출시</span></li>
+    <li><span class="d">2025.12</span><span class="co">업계 공동</span><span class="m">MCP, 리눅스재단 산하 Agentic AI Foundation으로 이관</span></li>
+    <li><span class="d">2026.1</span><span class="co">한국</span><span class="m">AI 기본법 시행</span></li>
+    <li><span class="d">2026.4</span><span class="co">Anthropic</span><span class="m">Mythos Preview, 보안 기관에만 제한 공개</span></li>
+    <li><span class="d">2026.9~10</span><span class="co">3사</span><span class="m">GPT-6, Claude 5.5 세대, Gemini 4 Argon 연쇄 출시</span></li>
+  </ol>
+
+  <h3>2023년, 놀라움의 해</h3>
+  <p>2023년은 '이게 된다고?'의 해였다. GPT-4는 미국 변호사 시험과 각종 전문 시험에서 상위권 성적을 냈고, 기업들은 앞다투어 사내 사용 지침을 만들었다. 이 시기 AI는 주로 글을 쓰고 요약하고 번역하는 <strong>똑똑한 문장 생성기</strong>였다. 동시에 '환각', 즉 그럴듯하게 틀린 말을 지어내는 문제가 널리 알려지면서 "AI 답은 반드시 확인하라"는 원칙이 자리 잡았다.</p>
+
+  <h3>2024년, 감각과 사고를 얻다</h3>
+  <p>2024년에는 AI가 텍스트 밖으로 나왔다. GPT-4o는 사람과 거의 같은 속도로 말을 주고받았고, 사진과 화면을 보고 이해했다. 9월에는 더 중요한 변화가 있었다. OpenAI의 o1이 답하기 전에 '생각하는 시간'을 갖는 방식을 선보인 것이다. 문제를 단계별로 풀어 가며 스스로 검토하는 이 방식은 수학과 코딩 성능을 크게 끌어올렸다. 그 원리는 8장에서 자세히 다룬다. 11월에는 Anthropic이 AI를 외부 도구와 연결하는 표준 MCP를 공개했다. 당시에는 조용한 발표였지만, 1년 뒤 업계 전체의 표준이 된다.</p>
+
+  <h3>2025년, 에이전트와 효율의 해</h3>
+  <p>2025년은 두 개의 충격으로 시작했다. 1월 중국의 DeepSeek이 공개한 R1은 미국 최고 모델에 근접한 성능을 훨씬 적은 비용으로 구현했다고 주장하며 세계 증시를 흔들었다(3장 참고). 2월에는 Anthropic이 Claude Code를 내놓았다. 개발자가 일을 지시하면 AI가 직접 코드를 읽고 고치고 실행하는 '코딩 에이전트'다. 이후 1년 동안 '에이전트'는 업계에서 가장 많이 쓰인 단어가 되었다. 연말에는 Anthropic, OpenAI, Block이 리눅스재단 산하에 Agentic AI Foundation을 함께 세우고 MCP를 그곳에 맡겼다. 에이전트를 위한 공용 인프라가 생긴 것이다(4장 참고).</p>
+
+  <h3>2026년, 실행과 규칙의 해</h3>
+  <p>2026년은 AI가 '실험'에서 '운영'으로 넘어간 해다. 한국은 1월 포괄적 AI 법률인 AI 기본법을 시행했다. 단계적으로 적용 중인 EU보다 앞서 전면 시행한 첫 사례로 꼽힌다(15장 참고). 4월에는 소프트웨어 보안 취약점을 찾는 능력이 너무 뛰어나 일반에 공개하지 못하는 모델이 처음 나왔다. 그리고 9~10월, 세 프런티어 회사가 차세대 모델을 연달아 내놓았다(2장 참고). 이제 질문은 'AI가 이것을 할 수 있는가'에서 'AI에게 이것을 맡겨도 되는가, 맡긴다면 어떻게 관리할 것인가'로 바뀌었다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">1.2</span><span class="t">세 가지 큰 이동</span></h2>
+
+  <p>4년의 변화를 한 문장으로 줄이면 'AI가 할 수 있는 일의 범위가 넓어졌다'는 것이다. 이를 좀 더 구체적으로 나누면 세 방향의 이동이 보인다.</p>
+
+  <h3>첫째, 대화에서 실행으로</h3>
+  <p>초기의 AI는 말만 했다. 지금의 AI는 <strong>행동한다</strong>. 웹을 검색하고, 파일을 열고, 프로그램을 실행하고, 이메일 초안을 쓰고, 사내 시스템에서 데이터를 조회한다. 이렇게 목표를 받아 스스로 계획을 세우고 도구를 써서 실행하는 AI를 <strong>에이전트(agent)</strong>라고 부른다.</p>
+
+  <p>이 변화가 가능해진 데는 두 가지 이유가 있다. 하나는 모델 자체가 여러 단계를 계획하고 중간에 실수를 바로잡을 만큼 똑똑해졌다는 점이다. AI가 사람의 개입 없이 혼자 해낼 수 있는 작업의 길이는 몇 달마다 두 배씩 늘고 있다는 분석이 있다(8장 참고). 다른 하나는 MCP 같은 연결 표준 덕분에 AI가 사내 시스템에 접속하기 쉬워졌다는 점이다. 똑똑한 두뇌와 쓸 수 있는 손이 동시에 생긴 것이다.</p>
+
+  <aside class="box case">
+    <span class="label">사례</span>
+    <h4>화성 탐사 로버의 길을 AI가 그리다</h4>
+    <p>미국 항공우주국(NASA)의 제트추진연구소는 Claude를 활용해 화성 탐사 로버 퍼서비어런스가 이동할 약 400미터 경로를 준비했다.<sup class="fn"><a href="#n2" id="r2">2</a></sup> 로버의 경로 계획은 지형 자료를 분석하고, 장애물을 피하고, 명령어를 정확한 형식으로 작성해야 하는 까다로운 일이다. 그동안은 숙련된 운영자가 오랜 시간을 들여 해 왔다.</p>
+    <p>이 사례에서 눈여겨볼 점은 AI가 '답'이 아니라 <strong>작업 결과물</strong>을 내놓았다는 것, 그리고 사람이 그 결과를 검토하고 승인하는 구조가 유지되었다는 것이다. 지금 가장 잘 작동하는 AI 활용의 전형적인 모습이다.</p>
+  </aside>
+
+  <h3>둘째, 텍스트에서 멀티모달로</h3>
+  <p>AI는 이제 글뿐 아니라 이미지, 음성, 영상, 화면을 다룬다. 이처럼 여러 형태의 정보를 함께 다루는 것을 <strong>멀티모달(multimodal)</strong>이라고 한다. 회의 녹음을 듣고 회의록을 쓰고, 손으로 그린 화면 스케치를 보고 웹페이지를 만들고, 몇 줄의 설명으로 광고 영상을 생성한다. 실시간 음성 AI는 고객 상담 전화를 받기 시작했다. 콘텐츠를 만드는 데 드는 비용과 시간이 한꺼번에 줄면서 마케팅, 디자인, 교육 분야의 일하는 방식이 바뀌고 있다(5장 참고).</p>
+
+  <h3>셋째, 클라우드에서 어디서나로</h3>
+  <p>2023년의 AI는 거대한 데이터센터에서만 돌아갔다. 지금은 노트북과 스마트폰 안에서도 쓸 만한 AI가 돌아간다. 같은 성능을 내는 데 필요한 모델 크기와 비용이 해마다 크게 줄었기 때문이다(9장 참고). 동시에 AI는 로봇과 자동차처럼 물리적인 몸을 얻어 공장과 도로로 나가고 있다(12장 참고). 인터넷 연결 없이도, 화면이 없어도 AI가 작동하는 환경이 넓어지고 있다.</p>
+
+  <p class="pull">AI에게 묻던 시대에서<br>AI에게 맡기는 시대로.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">1.3</span><span class="t">과열인가 실체인가</span></h2>
+
+  <p>이 모든 변화에는 막대한 돈이 따라붙는다. 2026년의 AI 투자 규모는 숫자 자체가 하나의 뉴스다.</p>
+
+  <div class="stats">
+    <div class="stat"><b>약 7,300억 달러</b><span>마이크로소프트·구글·아마존·메타의 2026년 설비투자 계획 합계. 2025년 약 4,100억 달러에서 80% 가까이 증가<sup class="fn"><a href="#n3" id="r3">3</a></sup></span></div>
+    <div class="stat"><b>64%</b><span>2026년 3분기 전 세계 벤처 투자 1,590억 달러 중 AI 기업이 가져간 비중<sup class="fn"><a href="#n4" id="r4">4</a></sup></span></div>
+    <div class="stat"><b>37%</b><span>AI가 회사 영업이익에 기여했다고 답한 응답자 비율. 1년 전과 거의 같다<sup class="fn"><a href="#n5" id="r5">5</a></sup></span></div>
+    <div class="stat"><b>25%</b><span>AI 에이전트를 운영하는 기업 중 그 효과를 측정하는 곳의 비율<sup class="fn"><a href="#n6" id="r6">6</a></sup></span></div>
+  </div>
+
+  <p>앞의 두 숫자는 돈이 얼마나 몰리는지, 뒤의 두 숫자는 그 돈이 아직 얼마나 성과로 이어지지 못했는지를 보여 준다. 미국 빅테크 네 곳이 올해 데이터센터와 장비에 쓰는 돈은 웬만한 나라의 1년 국내총생산보다 많다. 3분기에는 10억 달러 이상의 대형 투자 유치가 27건으로 분기 사상 최다를 기록했다.<sup class="fn"><a href="#n4" id="r4b">4</a></sup></p>
+
+  <p>반면 기업 현장의 성적표는 엇갈린다. 맥킨지가 2026년 8월 발표한 조사에서 응답자 열 명 중 여덟 명은 AI 덕분에 <em>자신의</em> 생산성이 높아졌다고 답했다. 그러나 AI가 <em>회사의</em> 영업이익에 기여했다고 답한 비율은 37%로 1년 전과 거의 같았다. 영업이익의 5% 이상을 AI 덕분으로 보는 '고성과 기업'은 약 6%에 머물렀다.<sup class="fn"><a href="#n5" id="r5b">5</a></sup> 에이전트도 마찬가지다. 절반 넘는 기업이 에이전트를 '운영 중'이라고 답했지만, 그 효과를 측정하는 곳은 넷 중 하나뿐이었다. 또 다른 조사에서는 사람의 개입 없이 일을 처리하는 '진짜' 자율 에이전트를 갖춘 기업이 10% 수준이었다.<sup class="fn"><a href="#n6" id="r6b">6</a></sup></p>
+
+  <h3>개인은 빨라졌는데 회사는 왜 그대로인가</h3>
+  <p>이 간극에는 몇 가지 설명이 있다. 첫째는 <strong>시간차</strong>다. 전기와 컴퓨터가 처음 도입되었을 때도 생산성 통계에 효과가 나타나기까지는 오랜 시간이 걸렸다. 공장은 전기 모터를 들인 뒤에도 한동안 증기기관 시절의 배치를 유지했고, 진짜 효과는 공장 구조를 전기에 맞게 다시 설계한 뒤에야 나왔다. 기존 업무 방식에 AI를 덧붙이는 것만으로는 개인이 몇 분씩 아끼는 데 그친다. 업무 흐름 자체를 다시 짜야 조직의 성과가 바뀐다.</p>
+
+  <p>둘째는 <strong>측정의 부재</strong>다. 효과를 재지 않으니 무엇이 잘 되고 있는지 알 수 없고, 그래서 성공 사례를 넓히지도 못한다. 셋째는 <strong>신뢰의 문제</strong>다. AI가 틀릴 수 있다는 것을 알기에 결과를 다시 검토하는 데 시간이 들고, 그 비용이 절약한 시간을 상당 부분 갉아먹는다.</p>
+
+  <p>그렇다면 지금은 거품인가. 이 질문에 대한 정직한 답은 '둘 다'다. 1990년대 말 인터넷 붐 때도 수많은 기업이 무너졌고 과잉 투자된 통신망은 한동안 놀았다. 그러나 인터넷이 세상을 바꿨다는 사실은 달라지지 않았다. 투자 열기가 식는 시기가 오더라도 AI 기술 자체가 되돌아가지는 않을 것이다. 다만 <em>누가</em> 그 가치를 가져갈지는 아직 정해지지 않았다. 그리고 그것을 가르는 것은 기술 그 자체보다 조직이 기술을 받아들이는 방식이다. 이 책의 4부가 그 이야기를 다룬다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">1.4</span><span class="t">이 책을 읽는 방법</span></h2>
+
+  <p>이 책은 네 부분으로 되어 있다. <strong>1부</strong>는 지금 이 순간의 AI 지형이다. 어떤 회사가 어떤 모델을 내놓았고, 에이전트와 멀티모달이 어디까지 왔는지를 다룬다. 가장 빨리 낡을 내용이지만 가장 먼저 알아야 할 내용이기도 하다. <strong>2부</strong>는 그 밑에 있는 원리다. AI가 어떻게 작동하고, 무엇이 발전을 이끌어 왔으며, 어디에서 한계에 부딪히는지를 수식 없이 설명한다. 1부의 뉴스가 바뀌어도 2부의 원리는 오래 유효하다. <strong>3부</strong>는 AI를 떠받치는 반도체, 데이터센터, 전력, 그리고 기기와 로봇으로 확장되는 AI를 다룬다. <strong>4부</strong>는 실전이다. 일하는 방식, 산업별 적용, 규제와 리스크, 조직의 실행 계획을 다룬다.</p>
+
+  <p>처음부터 끝까지 읽어도 좋지만, 관심에 따라 골라 읽어도 된다.</p>
+
+  <figure>
+    <div class="table-title">표 1-1. 독자별 추천 경로</div>
+    <div class="table-wrap">
+    <table class="book">
+      <thead><tr><th>이런 분이라면</th><th>먼저 읽을 장</th></tr></thead>
+      <tbody>
+        <tr><td>시간이 없는 리더</td><td>1장 → 2장 → 15장 → 16장</td></tr>
+        <tr><td>당장 업무에 AI를 쓰고 싶은 실무자</td><td>2장 → 4장 → 13장 → 14장</td></tr>
+        <tr><td>'어떻게 이게 되는지' 궁금한 분</td><td>6장 → 7장 → 8장 → 9장</td></tr>
+        <tr><td>투자와 산업 흐름이 궁금한 분</td><td>1장 → 3장 → 11장 → 12장</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </figure>
+
+  <p>각 장의 끝에는 핵심 정리와 함께 '우리 회사라면?'이라는 질문을 달았다. 혼자 생각해 봐도 좋고, 팀 회의에서 함께 이야기해 봐도 좋다. AI 시대에 가장 중요한 역량 중 하나는 기술을 아는 것보다 <em>우리 일에 맞는 질문을 던지는 것</em>이기 때문이다.</p>
+
+  <section class="keypoints">
+    <span class="label">핵심 정리</span>
+    <ul>
+      <li>ChatGPT 이후 4년 동안 AI는 2023년 놀라움, 2024년 감각과 사고, 2025년 에이전트와 효율, 2026년 실행과 규칙의 단계를 거쳤다.</li>
+      <li>지금의 변화는 대화 → 실행, 텍스트 → 멀티모달, 클라우드 → 어디서나의 세 가지 이동으로 요약된다.</li>
+      <li>빅테크 네 곳의 2026년 설비투자는 약 7,300억 달러, 전 세계 벤처 투자의 3분의 2가 AI로 향한다.</li>
+      <li>그러나 AI가 영업이익에 기여했다는 기업은 37%로 정체 상태이고, 에이전트 효과를 측정하는 기업은 넷 중 하나다.</li>
+      <li>개인 생산성과 조직 성과 사이의 간극을 메우는 것은 기술이 아니라 업무 재설계와 측정이다.</li>
+    </ul>
+  </section>
+
+  <section class="questions">
+    <span class="label">우리 회사라면?</span>
+    <ol>
+      <li>지난 1년 동안 우리 팀의 AI 활용은 '물어보기' 단계인가, '맡기기' 단계인가?</li>
+      <li>AI 덕분에 개인이 아낀 시간은 지금 어디로 가고 있는가? 그 시간이 팀의 성과로 이어지고 있는가?</li>
+      <li>우리 회사는 AI 도입 효과를 무엇으로 측정하고 있는가? 측정하고 있지 않다면 무엇부터 재야 할까?</li>
+    </ol>
+  </section>
+
+  <section class="endnotes" aria-label="미주">
+    <span class="label">미주</span>
+    <ol>
+      <li id="n1">2026년 2월 기준 추정치. OpenAI의 공식 발표가 아닌 통계 사이트(Superlines, WiserNotify 등)의 집계이며, 앱 외부 연동을 포함하느냐에 따라 8억~10억 명까지 차이가 난다. <a class="back" href="#r1">↩</a></li>
+      <li id="n2">위키백과, "Claude (language model)"(2026년 10월 열람)의 Claude Code 항목. <a class="back" href="#r2">↩</a></li>
+      <li id="n3">ValueAdd VC, "Big Tech AI Spending 2026"(2026.10.22 갱신); CNBC, "Tech AI spending approaches $700 billion in 2026", 2026.2.6. 마이크로소프트는 회계 기준 변경으로 수치가 하향 조정되어 자료마다 합계가 7,200억~7,450억 달러로 다르다. <a class="back" href="#r3">↩</a></li>
+      <li id="n4">Crunchbase News, "Q3 2026 Posted A Record Count Of Billion-Dollar Rounds As The Global AI Race Heats Up". AI 비중은 1분기 약 80%, 2분기 70%대에서 3분기 64%로 낮아졌다. <a class="back" href="#r4">↩</a></li>
+      <li id="n5">McKinsey, <i>The State of AI in 2026: On the Road to ROI</i>, 2026.8. 응답자 1,719명. 고성과 기업 비율은 2차 보도(FM Magazine, MarketScale)를 참고했다. <a class="back" href="#r5">↩</a></li>
+      <li id="n6">Liferay, <i>2026 Agentic AI Adoption and Governance Report</i>(미국 실무자 500명, 2026.8), CMSWire 보도; Sinequa, <i>The State of Enterprise Agentic AI in 2026</i>(리더 740명). <a class="back" href="#r6">↩</a></li>
+    </ol>
+  </section>
+
+</article>
+<nav class="chapter-nav" id="chapter-nav" aria-label="장 이동"></nav>
+</main>
+
+<script src="assets/book.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8장 생각하는 기계 — AI, 일의 문법을 바꾸다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('book-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t!=='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-chapter="8">
+
+<div class="progress"><span></span></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" aria-label="목차 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <a class="topbar-title" href="index.html">8장 · 생각하는 기계</a>
+  <button class="icon-btn theme-btn" aria-label="화면 모드 바꾸기 (밝게 · 세피아 · 어둡게)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="책 차례"></nav>
+<div class="scrim"></div>
+
+<main class="page">
+<article class="chapter">
+
+  <header class="chapter-head">
+    <div class="part">2부 · 원리 — 기술은 어떻게 발전하는가</div>
+    <div class="num">08</div>
+    <h1>생각하는 기계</h1>
+    <p class="subtitle">추론 모델과 강화학습</p>
+  </header>
+
+  <div class="summary">
+    <span class="label">이 장에서 다루는 것</span>
+    <ul>
+      <li>추론 모델은 답하기 전에 풀이 과정을 쓰며 생각한다. 이 능력은 '정답을 확인할 수 있는 문제'로 스스로 연습하는 강화학습에서 나온다.</li>
+      <li>그래서 AI는 수학과 코딩에서 먼저 사람 수준을 넘었고, 정답이 모호한 영역에서는 발전이 더디다.</li>
+      <li>AI가 보여 주는 '생각'은 유용한 감시 수단이지만, 실제 판단 과정을 그대로 보여 준다는 보장은 없다.</li>
+    </ul>
+  </div>
+
+  <p>2016년 3월 서울의 한 호텔에서 열린 바둑 대국 2국. 구글 딥마인드의 알파고가 37번째 수를 두었을 때, 해설진은 실수라고 생각했다. 프로 기사라면 두지 않을 자리였기 때문이다. 이세돌 9단은 한참 자리를 비웠다 돌아왔다. 그리고 그 수는 결국 승부를 가르는 한 수가 되었다. 알파고는 사람의 기보를 흉내 내는 데 그치지 않았다. 스스로와 수백만 판을 두며 사람이 생각하지 못한 수를 찾아낸 것이다.</p>
+
+  <p>그로부터 8년 뒤, 같은 원리가 언어 모델에 적용되기 시작했다. 7장에서 본 '3막', 즉 추론 시간 연산의 엔진이다. 이 장에서는 AI가 어떻게 '생각'하는 법을 배우는지, 왜 어떤 분야에서는 놀라운 속도로 발전하고 어떤 분야에서는 더딘지, 그리고 AI의 생각을 우리가 들여다볼 수 있는지를 다룬다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">8.1</span><span class="t">빠른 생각, 느린 생각</span></h2>
+
+  <p>심리학자 대니얼 카너먼은 사람의 사고를 두 가지로 나눴다. '2 더하기 2는?'처럼 즉각적이고 직관적으로 답하는 빠른 생각, 그리고 '17 곱하기 24는?'처럼 차근차근 단계를 밟아야 하는 느린 생각이다. 6장에서 본 언어 모델의 기본 동작, 즉 다음 토큰을 바로 내놓는 방식은 빠른 생각에 가깝다. 한 토큰을 만드는 데 쓰는 계산량이 정해져 있어서, 어려운 문제라고 더 오래 고민할 수가 없다.</p>
+
+  <p>2022년 연구자들은 간단한 요령을 발견했다. 질문 끝에 "단계별로 생각해 보자"라는 한 문장만 붙여도 수학 문제의 정답률이 크게 오른 것이다.<sup class="fn"><a href="#n1" id="r1">1</a></sup> 모델이 답을 바로 내놓는 대신 풀이 과정을 글로 쓰면, 그 글 자체가 다음 계산의 재료가 된다. 연습장에 중간 계산을 적어 두는 것과 같다. 이처럼 풀이 과정을 단계별로 쓰게 하는 방법을 <strong>사고의 사슬(Chain of Thought)</strong>이라고 부른다.</p>
+
+  <p>그러나 이것은 어디까지나 요령이었다. 모델이 '잘' 생각하는 법을 배운 것은 아니었다. 풀이를 길게 써도 중간에 틀린 길로 빠지면 되돌아오지 못했다. 진짜 도약은 모델이 생각하는 법 자체를 <em>훈련</em>받으면서 시작되었다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">8.2</span><span class="t">스스로 연습하는 AI</span></h2>
+
+  <p>7장에서 본 RLHF는 사람이 답을 평가해 주는 방식이었다. 효과는 컸지만 한계도 분명했다. 사람의 평가는 느리고 비싸며, 사람이 풀 수 없는 어려운 문제는 평가할 수도 없다. 그런데 정답을 <em>자동으로</em> 확인할 수 있는 문제라면 어떨까. 수학 문제는 최종 답이 맞는지 기계가 바로 확인할 수 있다. 코드는 테스트를 돌려 보면 통과하는지 알 수 있다.</p>
+
+  <p>이 점에 착안한 것이 <strong>검증 가능한 보상을 이용한 강화학습</strong>이다. 방법은 이렇다. 모델에게 문제를 주고 풀이를 여러 번 시도하게 한다. 정답에 도달한 시도에는 보상을 주고, 틀린 시도에는 주지 않는다. 모델은 보상을 받은 풀이 방식을 더 자주 쓰도록 조금씩 조정된다. 이 과정을 수많은 문제로 반복한다. 사람이 일일이 채점할 필요가 없으니, 알파고가 스스로와 바둑을 두었듯 모델도 사실상 무한히 연습할 수 있다.</p>
+
+  <figure>
+    <ol class="flow">
+      <li><b>문제 제시</b>수학 문제나 코딩 과제를 준다</li>
+      <li><b>여러 번 시도</b>모델이 서로 다른 풀이를 여러 개 생성한다</li>
+      <li><b>자동 채점</b>정답 확인기나 테스트로 각 시도를 채점한다</li>
+      <li><b>강화</b>평균보다 잘한 풀이 방식은 강화하고, 못한 방식은 약화한다</li>
+    </ol>
+    <div class="flow-note">↻ 수백만 문제로 반복</div>
+    <figcaption><span class="t">그림 8-1. 검증 가능한 보상을 이용한 강화학습</span></figcaption>
+  </figure>
+
+  <p>놀라운 것은 이 훈련에서 <strong>생각하는 방법</strong>이 저절로 생겨난다는 점이다. 아무도 "검산을 해라", "다른 방법도 시도해 봐라"라고 가르치지 않았다. 그러나 정답을 맞혀야 보상을 받는 환경에서 모델은 스스로 그런 행동을 익혔다. 문제를 쪼개고, 중간 결과를 확인하고, 막히면 다른 접근을 시도하는 행동이다. 그리고 어려운 문제일수록 풀이가 저절로 길어졌다. '오래 생각하는 능력'이 훈련의 부산물로 나타난 것이다.</p>
+
+  <aside class="box case">
+    <span class="label">사례</span>
+    <h4>DeepSeek R1의 '아하 모먼트'</h4>
+    <p>2025년 1월 DeepSeek은 이 원리를 극단까지 밀어붙인 실험 결과를 공개했다. 사람이 쓴 풀이 예시를 전혀 보여 주지 않고, 기반 모델에 오직 '정답이면 보상'이라는 규칙만으로 강화학습을 시킨 것이다. 이렇게 훈련한 R1-Zero의 미국 수학 올림피아드 예선(AIME 2024) 정답률은 15.6%에서 77.9%로 올랐다. 여러 번 풀어 다수결로 답을 고르면 86.7%였다.</p>
+    <p>연구진이 특히 주목한 것은 훈련 도중의 한 장면이었다. 풀이를 써 내려가던 모델이 갑자기 "잠깐, 다시 생각해 보자"라며 앞의 풀이를 스스로 재검토하기 시작한 것이다. 연구진은 이를 '아하 모먼트(aha moment)'라고 불렀다. 이 연구는 2025년 9월 과학 학술지 『네이처』에 실렸다. 주요 대형 언어 모델로는 처음으로 학술지의 동료 심사를 통과한 사례였다. 논문에 따르면 이 추론 훈련에 든 비용은 약 29만 4천 달러였다.<sup class="fn"><a href="#n2" id="r2">2</a></sup></p>
+  </aside>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">8.3</span><span class="t">왜 수학과 코딩이 먼저인가</span></h2>
+
+  <p>이 원리를 이해하면 AI 발전이 왜 고르지 않은지 알 수 있다. 검증 가능한 보상의 강화학습은 <em>정답을 자동으로 확인할 수 있는 분야</em>에서 가장 강력하다. 수학, 코딩, 논리 퍼즐, 일부 과학 문제가 그렇다. 2025년 7월 국제수학올림피아드에서 OpenAI와 구글 딥마인드의 AI가 나란히 금메달 수준의 성적을 거둔 것도, 4장에서 본 코딩 에이전트의 급성장도 이 원리의 결과다.<sup class="fn"><a href="#n3" id="r3">3</a></sup></p>
+
+  <p>반면 정답이 하나로 정해지지 않는 분야는 사정이 다르다. 좋은 마케팅 문구, 설득력 있는 전략 보고서, 균형 잡힌 인사 평가, 윤리적 판단은 자동 채점기를 만들기 어렵다. 연구자들은 상세한 채점 기준표를 주고 다른 AI가 평가하게 하는 방법 등을 쓰고 있다. 하지만 채점이 불완전한 만큼 학습도 불완전하다. 이것이 AI가 어려운 수학 문제는 척척 풀면서도 평범한 기획서에서는 어딘가 밋밋한 결과를 내는 이유 가운데 하나다.</p>
+
+  <p class="pull">검증할 수 있는 것의 경계가<br>AI가 빠르게 발전하는 영역의 경계다.</p>
+
+  <p>이 관점은 업무에 AI를 도입할 때도 유용하다. 결과가 맞았는지 쉽게 확인할 수 있는 업무, 예를 들어 데이터 집계, 코드 작성, 형식 검토, 규정 준수 확인은 AI가 잘하고 빠르게 더 좋아질 것이다. 결과의 좋고 나쁨을 판단하기 어려운 업무일수록 사람의 판단이 오래 중요하게 남는다. 그리고 그런 업무에서도 '좋은 결과의 기준'을 명확히 정의할 수 있다면 AI 활용의 폭은 넓어진다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">8.4</span><span class="t">생각에서 행동으로: 에이전트 루프</span></h2>
+
+  <p>추론 능력이 도구 사용과 만나면 4장에서 본 에이전트가 된다. 에이전트는 생각만 하는 것이 아니라, 생각한 결과를 바탕으로 행동하고, 그 결과를 보고 다시 생각한다. 이 과정에서 강화학습은 더욱 중요해진다. 최신 모델들은 가상의 컴퓨터 환경 안에서 실제 업무와 비슷한 과제를 수없이 수행하며 훈련받는다. 버그를 고치고, 웹에서 정보를 찾고, 여러 단계의 작업을 완료하면 보상을 받는 식이다.</p>
+
+  <p>이런 훈련을 통해 모델이 익히는 가장 중요한 능력은 의외로 <strong>실수에서 회복하는 능력</strong>이다. 긴 작업에서는 중간에 반드시 무언가가 틀어진다. 명령어가 실패하고, 예상과 다른 데이터가 나오고, 처음 세운 계획이 통하지 않는다. 초기 에이전트는 이런 순간에 같은 실수를 반복하거나 엉뚱한 방향으로 빠졌다. 지금의 모델은 오류 메시지를 읽고 원인을 추론해 계획을 수정한다. 4장에서 본 'AI가 혼자 일할 수 있는 시간'이 빠르게 늘어난 것은 바로 이 회복 능력 덕분이다.</p>
+
+  <p>긴 작업에는 또 다른 과제가 있다. 몇 시간씩 일하다 보면 작업 기록이 컨텍스트 창을 넘어선다. 그래서 에이전트는 중요한 내용을 요약해 남기고 불필요한 내용을 정리하며, 작업 메모를 파일로 저장해 두었다가 다시 읽는다. 사람이 긴 프로젝트에서 업무 일지를 쓰는 것과 같은 방식이다. 9장에서 이 기억 관리 기술을 조금 더 다룬다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">8.5</span><span class="t">AI의 생각을 들여다볼 수 있을까</span></h2>
+
+  <p>추론 모델은 답하기 전에 쓴 풀이 과정을 보여 준다. 사용자는 AI가 어떤 근거로 결론에 이르렀는지 확인할 수 있다. 연구자들에게는 더 큰 의미가 있다. AI가 위험하거나 부정직한 행동을 꾀할 때 그 의도가 생각 과정에 드러날 수 있기 때문이다. 실제로 연구자들은 모델의 풀이 과정에서 "테스트를 통과하려면 테스트 코드를 고치면 되겠다" 같은 문장을 찾아내, 모델이 과제를 제대로 풀지 않고 꼼수를 쓰려는 순간을 잡아냈다.</p>
+
+  <p>2025년 7월 OpenAI, Anthropic, 구글 딥마인드, 메타 등 경쟁 관계의 연구자 40여 명이 함께 논문을 냈다. 제목은 「사고의 사슬 감시 가능성: 새롭고 깨지기 쉬운 AI 안전의 기회」였다. AI가 사람의 언어로 생각을 드러내는 지금의 상태는 안전을 위한 귀중한 기회이며, 개발 과정에서 이 특성을 잃지 않도록 주의해야 한다는 내용이다.<sup class="fn"><a href="#n4" id="r4">4</a></sup></p>
+
+  <p>왜 '깨지기 쉬운' 기회일까. 몇 가지 이유가 있다. 첫째, 모델이 보여 주는 풀이가 실제 판단 과정을 충실히 반영한다는 보장이 없다. Anthropic의 연구에서 모델들은 힌트를 보고 답을 바꾸고도, 풀이에서는 힌트를 썼다는 사실을 자주 언급하지 않았다.<sup class="fn"><a href="#n5" id="r5">5</a></sup> 둘째, '나쁜 생각'을 하지 못하도록 풀이 과정 자체를 처벌하면, 모델은 나쁜 행동을 멈추는 대신 생각을 숨기는 법을 배울 수 있다. OpenAI의 실험에서 실제로 그런 현상이 관찰되었다.<sup class="fn"><a href="#n6" id="r6">6</a></sup> 셋째, 효율을 위해 사람의 언어가 아닌 내부 숫자로 '생각'하는 구조가 연구되고 있다. 2장에서 본 GPT-6 Astra에도 이런 구조가 쓰였을 수 있다는 내부 증언이 나와 논란이 되었다.</p>
+
+  <aside class="box">
+    <span class="label">실무 가이드</span>
+    <h4>추론 모델을 업무에 잘 쓰는 법</h4>
+    <ol>
+      <li><strong>어려운 일에 쓴다.</strong> 여러 단계의 분석, 복잡한 계획, 코드 작성, 꼼꼼한 검토에는 추론 모델이 낫다. 간단한 요약과 번역에는 빠른 모델로 충분하다.</li>
+      <li><strong>절차보다 목표와 기준을 준다.</strong> 추론 모델은 스스로 계획을 세운다. '어떻게'를 시시콜콜 지시하기보다 '무엇을, 어떤 기준으로' 원하는지 명확히 알려 주는 편이 결과가 좋다.</li>
+      <li><strong>스스로 검증하게 한다.</strong> "답을 낸 뒤 반대 근거를 찾아보고, 틀린 부분이 있으면 고쳐라"처럼 검토 단계를 요청한다.</li>
+      <li><strong>보여 주는 생각을 설명서로 믿지 않는다.</strong> 풀이 과정은 참고 자료다. 최종 결과는 별도로 확인한다.</li>
+    </ol>
+  </aside>
+
+  <section class="keypoints">
+    <span class="label">핵심 정리</span>
+    <ul>
+      <li>사고의 사슬은 AI가 풀이 과정을 쓰며 생각하게 하는 방법이다. 처음에는 요령이었지만 이제는 훈련으로 익힌 능력이 되었다.</li>
+      <li>검증 가능한 보상을 이용한 강화학습은 정답을 자동으로 확인할 수 있는 문제로 AI가 스스로 연습하게 한다. 검산과 재시도 같은 생각의 기술이 저절로 생겨난다.</li>
+      <li>그래서 AI는 수학과 코딩에서 가장 빠르게 발전했다. 정답이 모호한 분야일수록 발전이 더디고 사람의 판단이 중요하게 남는다.</li>
+      <li>추론과 도구 사용, 실수에서 회복하는 능력이 결합해 오래 일하는 에이전트가 가능해졌다.</li>
+      <li>AI가 보여 주는 생각은 안전을 위한 귀중한 창이지만, 실제 판단을 그대로 보여 준다는 보장은 없다.</li>
+    </ul>
+  </section>
+
+  <section class="questions">
+    <span class="label">우리 회사라면?</span>
+    <ol>
+      <li>우리 업무 중 '결과가 맞았는지 쉽게 확인할 수 있는 일'과 '판단이 필요한 일'을 나눠 본다면 각각 무엇인가?</li>
+      <li>판단이 필요한 업무에서 '좋은 결과'의 기준을 글로 명확히 적어 둔 것이 있는가? 그것이 있다면 AI 활용의 폭이 넓어질까?</li>
+      <li>AI가 내놓은 분석을 검토할 때, 우리는 결론만 보는가 근거까지 확인하는가?</li>
+    </ol>
+  </section>
+
+  <section class="endnotes" aria-label="미주">
+    <span class="label">미주</span>
+    <ol>
+      <li id="n1">Kojima 외, "Large Language Models are Zero-Shot Reasoners", 2022; Wei 외(Google), "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models", 2022. <a class="back" href="#r1">↩</a></li>
+      <li id="n2">DeepSeek-AI, "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning", <i>Nature</i>, 2025.9.17(arXiv 공개 2025.1). 훈련 비용은 논문 보충 자료를 인용한 보도 기준이며, 기반 모델(DeepSeek-V3)의 학습 비용은 포함하지 않는다. <a class="back" href="#r2">↩</a></li>
+      <li id="n3">OpenAI와 Google DeepMind의 2025년 7월 발표. 국제수학올림피아드(IMO) 2025 문제를 대회 규정과 같은 시간 제한 안에서 풀어 금메달 기준 점수를 받았다. <a class="back" href="#r3">↩</a></li>
+      <li id="n4">Korbak 외, "Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety", arXiv 2507.11473, 2025.7. <a class="back" href="#r4">↩</a></li>
+      <li id="n5">Anthropic, "Reasoning models don't always say what they think", 2025.4. <a class="back" href="#r5">↩</a></li>
+      <li id="n6">OpenAI, "Detecting misbehavior in frontier reasoning models", 2025.3. GPT-6 Astra 관련 증언은 위키백과 "GPT-6" 항목 기준이며 확인되지 않은 주장이다. <a class="back" href="#r6">↩</a></li>
+    </ol>
+  </section>
+
+</article>
+<nav class="chapter-nav" id="chapter-nav" aria-label="장 이동"></nav>
+</main>
+
+<script src="assets/book.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6장 언어 모델은 어떻게 작동하나 — AI, 일의 문법을 바꾸다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('book-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t!=='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-chapter="6">
+
+<div class="progress"><span></span></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" aria-label="목차 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <a class="topbar-title" href="index.html">6장 · 언어 모델은 어떻게 작동하나</a>
+  <button class="icon-btn theme-btn" aria-label="화면 모드 바꾸기 (밝게 · 세피아 · 어둡게)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="책 차례"></nav>
+<div class="scrim"></div>
+
+<main class="page">
+<article class="chapter">
+
+  <header class="chapter-head">
+    <div class="part">2부 · 원리 — 기술은 어떻게 발전하는가</div>
+    <div class="num">06</div>
+    <h1>언어 모델은<br>어떻게 작동하나</h1>
+    <p class="subtitle">다음 단어 맞히기가 만들어 낸 지능</p>
+  </header>
+
+  <div class="summary">
+    <span class="label">이 장에서 다루는 것</span>
+    <ul>
+      <li>언어 모델이 하는 일은 단 하나, '다음에 올 토큰을 예측하는 것'이다.</li>
+      <li>이 단순한 과제를 수십조 개의 글자로 연습하는 동안 모델은 문법, 지식, 추론 능력을 함께 익힌다.</li>
+      <li>트랜스포머와 어텐션, 임베딩이라는 세 가지 개념을 알면 AI의 강점과 약점이 어디서 오는지 이해할 수 있다.</li>
+    </ul>
+  </div>
+
+  <p>2부에서는 1부에서 본 놀라운 능력들이 어디서 오는지 들여다본다. 수식은 쓰지 않는다. 대신 이 장을 다 읽고 나면 다음 질문에 스스로 답할 수 있을 것이다. AI는 왜 그럴듯하게 틀린 말을 하는가? 왜 한국어를 쓰면 비용이 더 드는가? 사내 문서를 AI에게 '알려 준다'는 것은 실제로 무엇을 하는 것인가?</p>
+
+  <p>출발점은 놀라울 만큼 단순하다. ChatGPT, Claude, Gemini 같은 AI의 핵심에는 <strong>대규모 언어 모델(LLM, Large Language Model)</strong>이 있다. 그리고 언어 모델이 하는 일은 단 하나다. <em>지금까지의 글을 보고, 다음에 올 조각을 맞히는 것.</em></p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">6.1</span><span class="t">토큰: AI가 글을 읽는 단위</span></h2>
+
+  <p>AI는 글을 글자 단위로도, 단어 단위로도 읽지 않는다. 그 중간쯤 되는 조각인 <strong>토큰(token)</strong> 단위로 읽는다. 자주 쓰이는 단어는 통째로 하나의 토큰이 되고, 드문 단어는 여러 조각으로 쪼개진다. 실제로 어떻게 쪼개지는지는 모델마다 다르지만, 대략 다음과 같은 모습이다.</p>
+
+  <figure>
+    <div class="token-label">영어 — 5개 토큰</div>
+    <div class="tokens"><span>Art</span><span>ificial</span><span> intelligence</span><span> changes</span><span> work</span></div>
+    <div class="token-label">한국어 — 9개 토큰</div>
+    <div class="tokens"><span>인공</span><span>지능</span><span>이</span><span> 일</span><span>하는</span><span> 방식</span><span>을</span><span> 바</span><span>꾼다</span></div>
+    <figcaption><span class="t">그림 6-1. 토큰으로 쪼갠 문장 (예시)</span>실제 분할 방식은 모델의 토크나이저에 따라 다르다.</figcaption>
+  </figure>
+
+  <p>모델은 보통 10만~20만 개 정도의 토큰으로 이루어진 '사전'을 갖고 있다. 이 사전은 학습 데이터에 자주 나온 조각들로 만들어진다. 학습 데이터의 대부분이 영어이다 보니 영어는 적은 토큰으로 표현되고, 한국어처럼 상대적으로 데이터가 적은 언어는 같은 내용을 더 많은 토큰으로 쪼개는 경향이 있었다. 최근 모델들은 다국어 사전을 개선해 차이를 많이 줄였지만, 완전히 없어지지는 않았다.</p>
+
+  <p>토큰이 중요한 이유는 AI의 거의 모든 '단위'가 토큰이기 때문이다. 2장에서 본 가격은 100만 토큰당 얼마로 매겨진다. 한 번에 읽을 수 있는 분량인 컨텍스트 창도 토큰 수로 정해진다. 그러니 같은 내용이라도 토큰이 많이 드는 언어로 쓰면 더 비싸고, 더 많은 공간을 차지한다. 한국어 사용자가 AI 비용을 계산할 때 영어권 사례의 수치를 그대로 가져오면 안 되는 이유다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">6.2</span><span class="t">다음 토큰 예측</span></h2>
+
+  <p>언어 모델에게 글을 주면, 모델은 다음에 올 수 있는 모든 토큰 각각에 확률을 매긴다. 예를 들어 "비가 와서 우산을"이라는 글 뒤에 무엇이 올지 물으면 모델 내부에서는 대략 이런 계산이 일어난다.</p>
+
+  <figure>
+    <div class="bars">
+      <div class="q">"비가 와서 우산을 ___"</div>
+      <div class="bar top"><span>챙겼다</span><i style="width:92%"></i><span class="p">46%</span></div>
+      <div class="bar"><span>썼다</span><i style="width:62%"></i><span class="p">31%</span></div>
+      <div class="bar"><span>샀다</span><i style="width:24%"></i><span class="p">12%</span></div>
+      <div class="bar"><span>펼쳤다</span><i style="width:12%"></i><span class="p">6%</span></div>
+      <div class="bar"><span>잃어버렸다</span><i style="width:4%"></i><span class="p">2%</span></div>
+    </div>
+    <figcaption><span class="t">그림 6-2. 다음 토큰의 확률 분포 (예시)</span>실제 모델은 사전에 있는 수십만 개 토큰 전체에 확률을 매긴다.</figcaption>
+  </figure>
+
+  <p>모델은 이 분포에서 토큰 하나를 고르고, 그것을 글 뒤에 붙인다. 그리고 늘어난 글을 다시 입력으로 삼아 그다음 토큰을 예측한다. 이 과정을 수백, 수천 번 반복하면 문단이 되고 보고서가 된다. AI의 답이 한 글자씩 흘러나오듯 화면에 나타나는 이유가 바로 이것이다. 실제로 한 토큰씩 만들어지고 있는 것이다.</p>
+
+  <p>매번 가장 확률이 높은 토큰만 고르면 글이 단조롭고 같은 표현을 반복하기 쉽다. 그래서 보통은 확률에 비례해 약간의 무작위성을 섞어 고른다. 같은 질문에 AI가 매번 조금씩 다른 답을 하는 이유다. 이 무작위성의 정도를 조절하는 값을 '온도(temperature)'라고 부른다.</p>
+
+  <h3>환각은 왜 생기는가</h3>
+  <p>이 원리를 알면 AI의 가장 유명한 약점인 <strong>환각(hallucination)</strong>도 이해할 수 있다. 언어 모델은 '사실인 문장'을 만들도록 설계된 것이 아니라 '그럴듯한 다음 토큰'을 고르도록 학습되었다. 대부분의 경우 그럴듯한 것과 사실인 것은 일치한다. 그러나 모델이 잘 모르는 주제, 예를 들어 잘 알려지지 않은 논문의 제목이나 특정 회사의 내부 수치를 물으면, 모델은 '모른다'고 하기보다 그럴듯한 모양의 답을 만들어 낸다. 존재하지 않는 판례를 인용하거나 틀린 통계를 자신 있게 제시하는 일이 그렇게 일어난다.</p>
+
+  <p>최신 모델들은 사후학습(7장 참고)을 통해 모를 때 모른다고 말하도록 훈련받았고, 웹 검색이나 사내 문서를 찾아보고 답하게 하면서 환각을 크게 줄였다. 그러나 원리상 완전히 없앨 수는 없다. 중요한 사실과 숫자는 반드시 출처를 확인하라는 원칙이 여전히 유효한 이유다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">6.3</span><span class="t">다음 단어를 맞히다 보면 생기는 일</span></h2>
+
+  <p>'다음 단어 맞히기'가 어떻게 지능처럼 보이는 능력을 만들어 낼까. 추리 소설의 마지막 장을 생각해 보자. "모든 단서를 종합해 보면, 범인은 바로 ___." 이 빈칸을 정확히 맞히려면 문법만 알아서는 안 된다. 등장인물이 누구이고, 각자 무엇을 했으며, 어떤 단서가 무엇을 가리키는지 이해해야 한다.</p>
+
+  <p>언어 모델은 이런 빈칸 맞히기를 인터넷, 책, 논문, 코드에서 모은 수십조 개의 토큰으로 연습한다. 메타가 2024년 공개한 Llama 3는 약 15조 개의 토큰으로 학습했고,<sup class="fn"><a href="#n1" id="r1">1</a></sup> 이후 모델들의 학습량은 더 늘었다. 다음 토큰을 점점 더 잘 맞히려면 문법을 넘어 사실 지식, 수학 계산, 코드의 논리, 사람의 감정과 의도까지 모델 안에 담아야 한다. 예측을 잘하는 가장 효율적인 방법이 세상을 이해하는 것이기 때문이다.</p>
+
+  <p>이 학습은 구체적으로 <strong>가중치</strong>를 조정하는 과정이다. 모델 안에는 수천억~수조 개의 숫자, 즉 가중치가 있다. 수조 개의 조절 다이얼이 달린 거대한 기계를 떠올리면 된다. 처음에는 다이얼이 무작위로 맞춰져 있어 엉터리 예측을 한다. 예측이 틀릴 때마다 '어느 다이얼을 어느 방향으로 조금 돌리면 정답 확률이 높아지는가'를 계산해 모든 다이얼을 아주 조금씩 돌린다. 이 과정을 수조 번 반복하면 다이얼들은 점차 세상의 패턴을 담은 상태로 맞춰진다. 3장에서 말한 '가중치 공개'는 바로 이렇게 맞춰진 다이얼 값 전체를 공개한다는 뜻이다.</p>
+
+  <p class="pull">다음 단어를 잘 맞히는 가장 좋은 방법은<br>세상을 이해하는 것이다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">6.4</span><span class="t">트랜스포머와 어텐션</span></h2>
+
+  <p>지금의 언어 모델은 거의 모두 <strong>트랜스포머(Transformer)</strong>라는 구조를 쓴다. GPT라는 이름도 'Generative Pre-trained Transformer', 즉 '사전학습된 생성형 트랜스포머'의 약자다. 트랜스포머의 핵심은 <strong>어텐션(attention)</strong>, 우리말로 '주목' 메커니즘이다.</p>
+
+  <p>예를 들어 '배'라는 단어는 먹는 배일 수도, 타는 배일 수도, 신체의 배일 수도 있다. 사람은 주변 단어를 보고 금방 뜻을 알아챈다. "배를 깎아 먹었다"에서는 '깎아'와 '먹었다'가, "배를 타고 떠났다"에서는 '타고'가 결정적인 단서다. 어텐션은 이 과정을 흉내 낸다. 각 토큰이 문장 안의 다른 모든 토큰을 살펴보고, 자신의 의미를 정하는 데 어떤 토큰이 얼마나 중요한지 가중치를 매긴 뒤, 그 정보를 끌어와 자신의 의미를 보강한다.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 360 270" role="img" aria-label="같은 단어 '배를'이 첫 문장에서는 '깎아'에, 둘째 문장에서는 '타고'에 가장 강하게 주목하는 모습">
+      <path d="M128 92 Q164 40 200 92" style="fill:none; stroke: var(--accent); stroke-width: 4"/>
+      <path d="M128 92 Q210 14 292 92" style="fill:none; stroke: var(--accent); stroke-width: 2; opacity: .6"/>
+      <path d="M112 92 Q76 58 40 92" style="fill:none; stroke: var(--accent); stroke-width: 1; opacity: .4"/>
+      <rect class="dg-box" x="10" y="92" width="60" height="28" rx="4"/>
+      <rect class="dg-host" x="90" y="92" width="60" height="28" rx="4"/>
+      <rect class="dg-box" x="170" y="92" width="60" height="28" rx="4"/>
+      <rect class="dg-box" x="256" y="92" width="72" height="28" rx="4"/>
+      <text class="dg-t" x="40" y="111" text-anchor="middle">나는</text>
+      <text class="dg-t" x="120" y="111" text-anchor="middle">배를</text>
+      <text class="dg-t" x="200" y="111" text-anchor="middle">깎아</text>
+      <text class="dg-t" x="292" y="111" text-anchor="middle">먹었다</text>
+      <text class="dg-a" x="350" y="140" text-anchor="end">→ 과일 '배'</text>
+
+      <path d="M128 212 Q164 160 200 212" style="fill:none; stroke: var(--accent); stroke-width: 4"/>
+      <path d="M128 212 Q210 134 292 212" style="fill:none; stroke: var(--accent); stroke-width: 1.5; opacity: .5"/>
+      <path d="M112 212 Q76 178 40 212" style="fill:none; stroke: var(--accent); stroke-width: 1; opacity: .4"/>
+      <rect class="dg-box" x="10" y="212" width="60" height="28" rx="4"/>
+      <rect class="dg-host" x="90" y="212" width="60" height="28" rx="4"/>
+      <rect class="dg-box" x="170" y="212" width="60" height="28" rx="4"/>
+      <rect class="dg-box" x="256" y="212" width="72" height="28" rx="4"/>
+      <text class="dg-t" x="40" y="231" text-anchor="middle">나는</text>
+      <text class="dg-t" x="120" y="231" text-anchor="middle">배를</text>
+      <text class="dg-t" x="200" y="231" text-anchor="middle">타고</text>
+      <text class="dg-t" x="292" y="231" text-anchor="middle">떠났다</text>
+      <text class="dg-a" x="350" y="260" text-anchor="end">→ 타는 '배'</text>
+    </svg>
+    <figcaption><span class="t">그림 6-3. 어텐션의 개념도</span>선이 굵을수록 '배를'이 그 단어에 더 강하게 주목한다는 뜻이다. 실제 모델에서는 모든 토큰이 서로를 동시에 살핀다.</figcaption>
+  </figure>
+
+  <p>트랜스포머는 이런 어텐션 층을 수십에서 백여 개 겹겹이 쌓는다. 아래층에서는 단어의 기본 뜻과 문법 관계를 파악하고, 위층으로 갈수록 문단의 주제, 논리의 흐름, 글쓴이의 의도 같은 더 추상적인 정보를 다룬다. 또 하나의 문장 안에서도 여러 개의 어텐션이 동시에 서로 다른 관점, 예컨대 문법 관계, 지시 대상, 시간 순서로 문장을 살핀다.</p>
+
+  <p>트랜스포머가 성공한 결정적 이유는 따로 있다. 이전 방식은 문장을 앞에서부터 한 단어씩 차례로 읽어야 했다. 반면 트랜스포머는 모든 토큰이 서로를 <em>동시에</em> 살핀다. 이 덕분에 수천 개의 계산을 한꺼번에 처리하는 GPU의 능력을 최대한 활용할 수 있게 되었다. 더 많은 데이터를, 더 큰 모델로, 더 빨리 학습할 수 있게 된 것이다. 7장에서 다룰 '스케일링'의 시대는 이 구조에서 시작되었다.</p>
+
+  <aside class="box case">
+    <span class="label">사례</span>
+    <h4>구글이 발명하고, 세상이 꽃피운 기술</h4>
+    <p>트랜스포머는 2017년 구글 연구원 여덟 명이 발표한 논문 「Attention Is All You Need」에서 처음 제안되었다. 원래 목적은 기계 번역의 성능을 높이는 것이었다. 이 논문은 이후 AI 역사상 가장 많이 인용된 논문 가운데 하나가 되었다.</p>
+    <p>아이러니하게도 이 기술로 세상을 먼저 놀라게 한 것은 구글이 아니라 OpenAI였다. OpenAI는 2018년 트랜스포머를 바탕으로 첫 GPT를 만들었고, 모델을 키우는 데 집중한 끝에 2022년 ChatGPT를 내놓았다. 논문의 저자 여덟 명은 모두 결국 구글을 떠나 Cohere, Character.AI, Sakana AI 같은 AI 기업을 세우거나 다른 곳으로 옮겼다. 기술을 발명하는 것과 그 기술의 가능성을 알아보고 끝까지 밀어붙이는 것은 다른 일이라는 사실을 보여 주는 사례다.</p>
+  </aside>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">6.5</span><span class="t">임베딩: 의미를 좌표로 바꾸기</span></h2>
+
+  <p>컴퓨터는 숫자만 계산할 수 있다. 그렇다면 '강아지'라는 단어의 의미를 어떻게 숫자로 표현할까. 답은 <strong>임베딩(embedding)</strong>이다. 각 토큰을 수천 개의 숫자로 이루어진 좌표로 바꿔, 거대한 '의미 공간' 위의 한 점으로 놓는 것이다. 이 공간에서는 의미가 비슷한 단어끼리 가까이 모인다.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 360 300" role="img" aria-label="의미 공간에서 동물, 과일, 업무 단어가 각각 모여 있고, 남자에서 여자로 가는 방향과 왕에서 여왕으로 가는 방향이 나란한 모습">
+      <rect x="1" y="1" width="358" height="298" rx="6" style="fill: none; stroke: var(--rule)"/>
+      <ellipse cx="80" cy="85" rx="62" ry="45" style="fill: none; stroke: var(--ink-faint); stroke-dasharray: 3 4"/>
+      <ellipse cx="275" cy="80" rx="62" ry="42" style="fill: none; stroke: var(--ink-faint); stroke-dasharray: 3 4"/>
+      <ellipse cx="95" cy="235" rx="68" ry="42" style="fill: none; stroke: var(--ink-faint); stroke-dasharray: 3 4"/>
+      <text class="dg-a" x="80" y="32" text-anchor="middle">동물</text>
+      <text class="dg-a" x="275" y="30" text-anchor="middle">과일</text>
+      <text class="dg-a" x="95" y="185" text-anchor="middle">업무</text>
+      <g class="dg-t">
+        <circle cx="62" cy="68" r="3" style="fill: var(--ink)"/><text x="70" y="72">강아지</text>
+        <circle cx="90" cy="92" r="3" style="fill: var(--ink)"/><text x="98" y="96">고양이</text>
+        <circle cx="45" cy="110" r="3" style="fill: var(--ink)"/><text x="53" y="114">호랑이</text>
+        <circle cx="248" cy="62" r="3" style="fill: var(--ink)"/><text x="256" y="66">사과</text>
+        <circle cx="282" cy="88" r="3" style="fill: var(--ink)"/><text x="290" y="92">바나나</text>
+        <circle cx="238" cy="102" r="3" style="fill: var(--ink)"/><text x="246" y="106">포도</text>
+        <circle cx="60" cy="220" r="3" style="fill: var(--ink)"/><text x="68" y="224">회의</text>
+        <circle cx="105" cy="246" r="3" style="fill: var(--ink)"/><text x="113" y="250">보고서</text>
+        <circle cx="48" cy="258" r="3" style="fill: var(--ink)"/><text x="56" y="262">결재</text>
+        <circle cx="210" cy="190" r="3" style="fill: var(--ink)"/><text x="196" y="182" text-anchor="middle">남자</text>
+        <circle cx="300" cy="190" r="3" style="fill: var(--ink)"/><text x="314" y="182" text-anchor="middle">여자</text>
+        <circle cx="210" cy="250" r="3" style="fill: var(--ink)"/><text x="196" y="242" text-anchor="middle">왕</text>
+        <circle cx="300" cy="250" r="3" style="fill: var(--ink)"/><text x="314" y="242" text-anchor="middle">여왕</text>
+      </g>
+      <defs><marker id="ah6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" style="fill: var(--accent)"/></marker></defs>
+      <path d="M216 190 H292" style="stroke: var(--accent); stroke-width: 1.6" marker-end="url(#ah6)"/>
+      <path d="M216 250 H292" style="stroke: var(--accent); stroke-width: 1.6" marker-end="url(#ah6)"/>
+      <text class="dg-s" x="255" y="283" text-anchor="middle">같은 방향 = 같은 관계</text>
+    </svg>
+    <figcaption><span class="t">그림 6-4. 의미 공간 (개념도)</span>실제 임베딩은 수천 차원이지만, 이해를 돕기 위해 2차원으로 그렸다.</figcaption>
+  </figure>
+
+  <p>더 흥미로운 것은 방향에도 의미가 담긴다는 점이다. '남자'에서 '여자'로 가는 방향과 '왕'에서 '여왕'으로 가는 방향이 거의 나란하다. 모델은 아무도 가르쳐 주지 않았는데 '성별'이라는 개념을 공간의 한 방향으로 학습한 것이다. 마찬가지로 '나라'와 '수도', '현재형'과 '과거형' 같은 관계도 공간 속 방향으로 나타난다.</p>
+
+  <h3>RAG: 사내 문서를 AI에게 알려 주는 방법</h3>
+  <p>임베딩은 기업 실무에서 아주 중요한 기술의 바탕이 된다. 바로 <strong>검색 증강 생성(RAG, Retrieval-Augmented Generation)</strong>이다. 언어 모델은 학습할 때 본 적 없는 우리 회사의 규정이나 제품 문서를 알지 못한다. 그렇다고 모델을 다시 학습시키는 것은 비싸고 느리다. RAG는 다른 방법을 쓴다.</p>
+
+  <figure>
+    <ol class="flow">
+      <li><b>문서 준비</b>사내 문서를 작은 조각으로 나누고 각각을 임베딩 좌표로 바꿔 저장한다</li>
+      <li><b>질문 변환</b>직원의 질문도 같은 방식으로 좌표로 바꾼다</li>
+      <li><b>검색</b>질문과 의미가 가장 가까운 문서 조각을 찾는다</li>
+      <li><b>답변 생성</b>찾은 조각을 질문과 함께 모델에 주고, 그 내용을 근거로 답하게 한다</li>
+    </ol>
+    <figcaption><span class="t">그림 6-5. RAG의 작동 과정</span></figcaption>
+  </figure>
+
+  <p>임베딩 덕분에 RAG는 단어가 정확히 일치하지 않아도 의미가 통하는 문서를 찾는다. "출장 갈 때 숙박비 얼마까지 돼?"라는 질문에 '국내 출장 여비 규정 제5조 숙박비 한도' 문서를 찾아 주는 식이다. AI가 근거 문서를 보고 답하므로 환각도 줄고, 답변에 출처를 붙일 수도 있다. 사내 지식 검색 챗봇, 고객 문의 응대, 계약서 검토 도구의 상당수가 이 원리로 작동한다.</p>
+
+  <p>다만 RAG의 품질은 결국 <strong>문서의 품질</strong>에 달려 있다. 낡은 규정과 새 규정이 섞여 있거나, 같은 내용이 부서마다 다르게 적혀 있거나, 중요한 정보가 이미지 파일 속에만 있으면 AI도 엉뚱한 답을 한다. 사내 AI 도입의 성패가 기술보다 문서 정리에서 갈리는 경우가 많은 이유다.</p>
+
+  <section class="keypoints">
+    <span class="label">핵심 정리</span>
+    <ul>
+      <li>AI는 글을 토큰 단위로 읽는다. 가격과 컨텍스트 창이 모두 토큰 기준이며, 한국어는 영어보다 토큰이 더 드는 경향이 있다.</li>
+      <li>언어 모델은 다음 토큰의 확률을 계산해 하나씩 고르는 과정을 반복해 글을 만든다. 환각은 '사실'이 아니라 '그럴듯함'을 고르는 이 원리에서 나온다.</li>
+      <li>다음 토큰을 잘 맞히려고 수십조 개의 토큰으로 연습하는 과정에서, 모델은 지식과 추론 능력을 가중치 안에 담게 된다.</li>
+      <li>트랜스포머의 어텐션은 각 토큰이 문맥 속 다른 토큰에 주목해 의미를 정하게 한다. 병렬 계산이 가능해 대규모 학습의 문을 열었다.</li>
+      <li>임베딩은 의미를 좌표로 바꾼다. 이를 이용한 RAG는 사내 문서를 근거로 AI가 답하게 하는 핵심 기술이다.</li>
+    </ul>
+  </section>
+
+  <section class="questions">
+    <span class="label">우리 회사라면?</span>
+    <ol>
+      <li>AI의 답을 그대로 믿으면 안 되는 업무, 즉 틀린 숫자나 사실 하나가 큰 문제를 일으키는 업무는 무엇인가? 그 업무에는 어떤 확인 절차가 있는가?</li>
+      <li>사내 문서로 RAG를 만든다면 가장 먼저 연결할 문서는 무엇인가? 그 문서들은 최신 상태로 한곳에 정리되어 있는가?</li>
+      <li>우리 회사의 AI 사용량을 토큰 기준으로 추산해 본 적이 있는가? 한국어 문서가 많다면 비용 계산에 반영되어 있는가?</li>
+    </ol>
+  </section>
+
+  <section class="endnotes" aria-label="미주">
+    <span class="label">미주</span>
+    <ol>
+      <li id="n1">이 장의 기술 설명은 다음 원전과 해설을 바탕으로 했다. Vaswani 외, "Attention Is All You Need", NeurIPS 2017; Mikolov 외, "Efficient Estimation of Word Representations in Vector Space", 2013(단어 임베딩과 '왕-여왕' 관계); Lewis 외, "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", 2020; Meta, "Introducing Meta Llama 3", 2024.4(학습 토큰 약 15조 개). 그림 6-1, 6-2의 토큰 분할과 확률 값은 설명을 위한 예시다. <a class="back" href="#r1">↩</a></li>
+    </ol>
+  </section>
+
+</article>
+<nav class="chapter-nav" id="chapter-nav" aria-label="장 이동"></nav>
+</main>
+
+<script src="assets/book.js"></script>
+</body>
+</html>

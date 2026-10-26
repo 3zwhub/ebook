@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12장 화면 밖으로 — AI, 일의 문법을 바꾸다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('book-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t!=='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-chapter="12">
+
+<div class="progress"><span></span></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" aria-label="목차 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <a class="topbar-title" href="index.html">12장 · 화면 밖으로</a>
+  <button class="icon-btn theme-btn" aria-label="화면 모드 바꾸기 (밝게 · 세피아 · 어둡게)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="책 차례"></nav>
+<div class="scrim"></div>
+
+<main class="page">
+<article class="chapter">
+
+  <header class="chapter-head">
+    <div class="part">3부 · 기반 — 무엇이 떠받치나</div>
+    <div class="num">12</div>
+    <h1>화면 밖으로</h1>
+    <p class="subtitle">온디바이스 AI와 피지컬 AI</p>
+  </header>
+
+  <div class="summary">
+    <span class="label">이 장에서 다루는 것</span>
+    <ul>
+      <li>AI가 데이터센터를 벗어나 스마트폰과 PC 안으로 들어오고 있다. 이 변화의 열쇠는 연산 성능보다 메모리다.</li>
+      <li>AI가 몸을 얻어 로봇과 자동차로 물리 세계에 나오고 있다. 자율주행은 상용화 단계에, 휴머노이드는 초기 현장 투입 단계에 있다.</li>
+      <li>두 흐름 모두 새로운 반도체 수요를 만든다. 반도체 기업에게는 시장이자, 자기 공장을 바꿀 도구다.</li>
+    </ul>
+  </div>
+
+  <p>지금까지 이 책에서 다룬 AI는 대부분 거대한 데이터센터 안에 살았다. 우리는 인터넷으로 질문을 보내고 답을 받았다. 이 장은 AI가 그 울타리를 넘어서는 두 가지 방향을 다룬다. 하나는 <strong>작아져서 내 손안의 기기로 들어오는 것</strong>, 다른 하나는 <strong>몸을 얻어 물리 세계로 나오는 것</strong>이다.</p>
+
+  <p>반도체 회사에서 일하는 독자에게 이 장은 특별한 의미가 있다. 두 방향 모두 새로운 칩과 메모리를 요구한다. 그리고 공장이라는 물리 세계에서 일하는 우리에게 '피지컬 AI'는 먼 미래의 로봇 이야기가 아니라 곧 마주할 현장의 변화다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">12.1</span><span class="t">작아지는 AI: 온디바이스</span></h2>
+
+  <p>9장에서 본 증류와 양자화 덕분에, 2년 전 데이터센터에서나 돌던 수준의 AI가 이제 스마트폰과 노트북에서 돈다. 보통 수십억 개 수준의 매개변수를 가진 이런 모델을 <strong>소형 언어 모델(SLM)</strong>이라고 부른다. 기기 안에서 AI를 직접 돌리는 것을 <strong>온디바이스 AI</strong>라고 한다.</p>
+
+  <p>온디바이스 AI의 장점은 세 가지다. 첫째, <strong>개인정보 보호</strong>다. 사진, 메시지, 통화 내용이 기기 밖으로 나가지 않는다. 둘째, <strong>속도</strong>다. 인터넷을 오가는 시간이 없어 즉각 반응한다. 셋째, <strong>비용</strong>이다. 사용자가 이미 산 기기의 칩을 쓰므로 서비스 회사는 데이터센터 비용을 아낄 수 있다. 그래서 실제 제품은 대개 섞어 쓰는 방식을 택한다. 간단한 요약, 번역, 사진 편집은 기기에서 처리하고, 어려운 질문은 클라우드의 큰 모델로 넘긴다. 애플 인텔리전스와 삼성 갤럭시 AI가 모두 이 구조다.</p>
+
+  <h3>병목은 연산이 아니라 메모리다</h3>
+  <p>AI를 위한 기기 경쟁에서 가장 많이 언급되는 숫자는 NPU(신경망 처리 장치)의 연산 성능이다. 마이크로소프트는 'Copilot+ PC'의 기준으로 초당 40조 회 연산(40 TOPS) 이상의 NPU를 요구한다. 2026년 가을 발표된 퀄컴의 최신 스마트폰 칩은 NPU 성능이 100 TOPS를 넘고, 전체 300억 개 매개변수 중 약 80억 개만 쓰는 전문가 혼합 모델을 기기 안에서 돌릴 수 있다고 소개되었다. 이 칩은 차세대 모바일 메모리 LPDDR6를 최대 24GB까지 지원한다.<sup class="fn"><a href="#n1" id="r1">1</a></sup></p>
+
+  <p>그런데 언어 모델의 실제 속도를 좌우하는 것은 연산 성능보다 <strong>메모리 용량과 대역폭</strong>이다. 9장과 11장에서 본 것처럼, 언어 모델은 토큰 하나를 만들 때마다 가중치 전체를 메모리에서 읽어 와야 한다. 그래서 모델이 메모리에 들어가는지, 그리고 메모리가 얼마나 빨리 데이터를 넘겨주는지가 체감 성능을 결정한다. 데이터센터에서 HBM이 했던 역할을 기기에서는 고속 모바일 D램이 맡는 셈이다. 온디바이스 AI가 확산될수록 스마트폰과 PC 한 대에 들어가는 메모리의 양과 성능 기준이 함께 올라간다. 메모리를 만드는 회사에게는 데이터센터에 이은 두 번째 AI 수요처다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">12.2</span><span class="t">몸을 얻는 AI: 피지컬 AI</span></h2>
+
+  <p>AI 연구에는 오래된 역설이 있다. 컴퓨터에게 체스나 미적분처럼 사람에게 어려운 일은 쉽고, 컵을 집거나 계단을 오르는 것처럼 네 살배기도 하는 일은 어렵다는 것이다. 이를 처음 지적한 로봇공학자의 이름을 따 <strong>모라벡의 역설</strong>이라고 부른다. 사람에게 쉬운 감각과 운동 능력은 수억 년의 진화가 다듬은 것이라 오히려 흉내 내기 어렵다.</p>
+
+  <p>언어 모델이 성공한 비결은 인터넷이라는 거대한 글 데이터였다. 로봇에게는 그런 데이터가 없다. '컵을 이렇게 잡았더니 성공했다'는 기록이 인터넷에 수조 개씩 쌓여 있지 않기 때문이다. 연구자들은 세 가지 방법으로 이 문제를 풀고 있다. 사람이 원격으로 로봇을 조종하며 시범 데이터를 모으는 방법, 정교한 가상 세계에서 로봇이 수백만 번 연습하게 하는 시뮬레이션, 그리고 사람이 일하는 모습을 찍은 영상에서 배우는 방법이다.</p>
+
+  <p>여기에 언어 모델의 성공 공식을 로봇에 적용한 <strong>로봇 파운데이션 모델</strong>이 등장했다. 구글 딥마인드의 Gemini Robotics, 스타트업 Physical Intelligence의 π(파이) 시리즈, 엔비디아의 GR00T 등이 대표적이다. 이 모델들은 카메라 영상과 "빨래를 개어 줘" 같은 말로 된 지시를 함께 받아 로봇 팔의 움직임을 출력한다. 언어 모델이 가진 세상에 대한 지식과 추론 능력을 로봇의 몸에 연결하려는 시도다. 특정 작업만 반복하던 기존 산업용 로봇과 달리, 처음 보는 물건과 상황에도 어느 정도 대응할 수 있다는 것이 핵심이다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">12.3</span><span class="t">휴머노이드: 기대와 현실</span></h2>
+
+  <p>사람 모양의 로봇, 즉 휴머노이드는 피지컬 AI의 상징이 되었다. 사람이 일하도록 설계된 공장과 창고에 시설을 바꾸지 않고 바로 투입할 수 있다는 것이 사람 모양을 고집하는 이유다. 테슬라, 피규어 AI, 보스턴 다이내믹스, 중국의 유니트리 등이 경쟁하고 있으며 투자도 쏟아지고 있다.</p>
+
+  <p>그러나 2026년의 현실은 기대보다 훨씬 소박하다. 테슬라의 일론 머스크는 2026년 1월 옵티머스가 아직 "유용한 일을 하고 있지 않다"며 연구개발 단계라고 밝혔다. 피규어 AI는 BMW 공장에서 반복 작업을 수행했지만 투입 대수는 한 자릿수 수준으로 보도되었다. 업계 분석들은 2026년 실제로 생산적인 일을 하는 휴머노이드가 전 세계에 수백에서 수천 대 수준이라고 본다. 일하는 범위도 부품을 옮기고 자재를 나르는 좁은 작업에 머문다.<sup class="fn"><a href="#n2" id="r2">2</a></sup></p>
+
+  <aside class="box case">
+    <span class="label">사례</span>
+    <h4>현대차그룹과 아틀라스</h4>
+    <p>휴머노이드의 산업 투입에서 가장 구체적인 계획을 내놓은 곳은 한국 기업이다. 현대차그룹은 2021년 미국의 로봇 기업 보스턴 다이내믹스를 인수했다. 보스턴 다이내믹스는 2026년 1월 CES에서 전기로 움직이는 새 휴머노이드 '아틀라스'를 공개했다. 2026년 생산 물량은 모두 현대차그룹의 공장과, 로봇 AI를 함께 개발하는 구글 딥마인드에 배정되었다.</p>
+    <p>현대차그룹은 장기적으로 현대차와 기아의 공장에 아틀라스를 2만 5천 대 이상 투입하고, 2028년까지 미국 내 생산을 늘리겠다는 계획을 밝혔다.<sup class="fn"><a href="#n3" id="r3">3</a></sup> 자동차 공장이라는 실제 현장을 가진 회사가 로봇 회사를 소유하고, 최상위 AI 연구소와 손잡은 구조다. 로봇 AI에 가장 부족한 것이 실제 현장 데이터라는 점을 생각하면, 이 조합이 왜 주목받는지 알 수 있다.</p>
+  </aside>
+
+  <p class="pull">언어 모델에게는 인터넷이 있었다.<br>로봇에게는 현장이 필요하다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">12.4</span><span class="t">자율주행: 가장 앞선 피지컬 AI</span></h2>
+
+  <p>피지컬 AI 가운데 가장 먼저 대규모 상용화에 이른 분야는 자율주행이다. 구글 계열의 웨이모는 2026년 9월 기준 미국 14개 도시에서 운전자 없는 유료 택시를 운행한다. 차량은 4천 대가 넘고, 주간 운행 횟수는 50만 회를 넘어섰으며, 연말까지 주 100만 회를 목표로 한다. 중국 바이두의 아폴로 고도 비슷한 규모로 운행 중이다. 반면 카메라만으로 자율주행을 구현하겠다는 테슬라의 로보택시는 2026년 6월 기준 수십 대 규모에 머물렀다.<sup class="fn"><a href="#n4" id="r4">4</a></sup></p>
+
+  <p>자율주행의 역사는 피지컬 AI 전체의 시간표를 짐작하게 해 준다. 2010년대 중반에는 몇 년 안에 완전 자율주행이 온다는 전망이 쏟아졌다. 실제로 의미 있는 규모의 상용 서비스가 나오기까지는 그 뒤로 10년 가까이 걸렸다. 수없이 많은 예외 상황을 처리할 만큼 안전해지는 데 그만큼의 시간과 데이터가 필요했던 것이다. 휴머노이드도 비슷한 길을 걸을 가능성이 크다. 시연은 빠르지만 현장 투입은 느리다.</p>
+
+  <!-- ============================================ -->
+  <h2><span class="sec-no">12.5</span><span class="t">반도체 공장과 피지컬 AI</span></h2>
+
+  <p>반도체 공장은 이미 세계에서 가장 자동화된 공장 가운데 하나다. 웨이퍼는 천장 레일을 따라 움직이는 무인 반송 시스템으로 장비 사이를 오가고, 수백 개의 공정 단계가 기계로 처리된다. 그래서 반도체 공장의 피지컬 AI는 휴머노이드보다 <strong>눈과 두뇌</strong>에서 먼저 시작되고 있다.</p>
+
+  <p>대표적인 분야가 결함 검사다. 나노미터 크기의 결함 이미지를 사람이 일일이 분류하던 일을 비전 AI가 넘겨받고 있다. TSMC는 2026년 엔비디아의 비전 AI 플랫폼으로 결함 자동 검사를 고도화하고, 노광, 공정 시뮬레이션, 공정 제어에도 AI를 적용하고 있다고 발표했다.<sup class="fn"><a href="#n5" id="r5">5</a></sup> 장비 센서 데이터로 고장을 미리 예측하는 예지 보전, 공정 조건을 실시간으로 미세 조정하는 공정 제어도 AI가 빠르게 들어오는 영역이다.</p>
+
+  <p>그러나 현장의 벽도 높다. 반도체 업계 전문지는 AI 도입 시도의 약 70%가 시범 적용 이후 확산 단계에서 멈춘다고 보도했다. 수율을 떨어뜨리는 결함 데이터는 드물어서 학습 데이터가 부족하고, 공정이 바뀔 때마다 모델을 다시 맞춰야 하기 때문이다.<sup class="fn"><a href="#n6" id="r6">6</a></sup> 1장과 4장에서 본 '파일럿의 함정'이 공장에서도 똑같이 나타나는 셈이다. 반대로 말하면 수율 개선처럼 효과를 숫자로 확인할 수 있는 과제에 집중하고, 현장 엔지니어의 지식을 데이터로 꾸준히 쌓는 조직이 앞서 나갈 수 있다.</p>
+
+  <aside class="box">
+    <span class="label">반도체 기업의 관점</span>
+    <h4>화면 밖 AI가 만드는 기회와 과제</h4>
+    <ol>
+      <li><strong>제품 기회:</strong> 온디바이스 AI는 고용량·고대역폭 모바일 메모리와 저전력 AI 칩 수요를, 로봇과 자율주행은 차량·로봇용 고신뢰성 반도체 수요를 키운다.</li>
+      <li><strong>공정 혁신:</strong> 결함 검사, 예지 보전, 공정 제어는 이미 AI가 성과를 내는 영역이다. 확산의 관건은 데이터 축적과 현장 엔지니어의 참여다.</li>
+      <li><strong>장기 관찰:</strong> 휴머노이드의 공장 투입은 자동차 공장에서 먼저 검증될 것이다. 반도체 공장의 설비 유지보수나 자재 취급에 언제 쓸 만해질지 지켜볼 필요가 있다.</li>
+    </ol>
+  </aside>
+
+  <section class="keypoints">
+    <span class="label">핵심 정리</span>
+    <ul>
+      <li>증류와 양자화로 작아진 AI가 스마트폰과 PC 안에서 돈다. 개인정보 보호, 속도, 비용이 장점이며, 실제 제품은 기기와 클라우드를 섞어 쓴다.</li>
+      <li>온디바이스 AI의 체감 성능은 NPU 연산 성능보다 메모리 용량과 대역폭이 좌우한다. 메모리 기업에게는 데이터센터에 이은 두 번째 AI 수요처다.</li>
+      <li>로봇 AI의 가장 큰 과제는 데이터다. 로봇 파운데이션 모델이 등장했지만, 휴머노이드의 실제 현장 투입은 아직 초기 단계다.</li>
+      <li>자율주행은 웨이모를 중심으로 상용화에 이르렀다. 그 10년의 역사는 피지컬 AI의 현실적인 시간표를 보여 준다.</li>
+      <li>반도체 공장의 피지컬 AI는 결함 검사, 예지 보전, 공정 제어에서 먼저 성과를 내고 있으며, 확산의 열쇠는 데이터와 현장 참여다.</li>
+    </ul>
+  </section>
+
+  <section class="questions">
+    <span class="label">우리 회사라면?</span>
+    <ol>
+      <li>온디바이스 AI와 로봇·자율주행의 확산은 우리 제품 포트폴리오에서 어떤 제품의 수요를 바꾸는가? 우리는 그 변화에 맞는 로드맵을 갖고 있는가?</li>
+      <li>우리 공장에서 시범 적용 후 확산되지 못한 AI 과제가 있다면, 멈춘 이유는 데이터인가, 현장 수용성인가, 효과 측정인가?</li>
+      <li>숙련 엔지니어의 현장 지식 중 AI가 학습할 수 있는 데이터로 쌓이지 않고 사라지고 있는 것은 무엇인가?</li>
+    </ol>
+  </section>
+
+  <section class="endnotes" aria-label="미주">
+    <span class="label">미주</span>
+    <ol>
+      <li id="n1">AndroGuider, "Qualcomm Launches New AI Smartphone Chips Capable of Running 30B Models Locally", 2026.9; Digital Applied, "AI PCs and NPUs in 2026". 회사 발표를 전한 2차 자료이며, 사양은 제조사 공식 자료로 확인이 필요하다. <a class="back" href="#r1">↩</a></li>
+      <li id="n2">InsideDeepTech, "Humanoid Robots 2026: Full Guide"; CallCanvas AI, "Which Humanoid Robots Are Actually Working in Factories in 2026?"; The Humanoids Have Landed(CTCO). 휴머노이드 배치 대수는 자료마다 차이가 매우 크다. <a class="back" href="#r2">↩</a></li>
+      <li id="n3">AI Magicx, "Humanoid Robots in the Workplace: The 2026 Business Leader's Reality Check"; GrabARobot, "Humanoid Robots Enter the Workforce". 현대차그룹과 보스턴 다이내믹스의 공식 발표로 추가 확인이 필요하다. <a class="back" href="#r3">↩</a></li>
+      <li id="n4">Drive Tesla Canada, "Waymo launches driverless rides in Denver, San Diego, Tampa", 2026.9.22; Electrek, 2026.7.8; Gradually.ai, "Robotaxi statistics"(Bloomberg 집계 인용). <a class="back" href="#r4">↩</a></li>
+      <li id="n5">NVIDIA, "NVIDIA and TSMC Bring AI Into Fabs to Advance Semiconductor Design and Manufacturing", 2026.5.31. 엔비디아의 발표 자료이며 성능 수치는 독립적으로 검증되지 않았다. <a class="back" href="#r5">↩</a></li>
+      <li id="n6">Semiconductor Engineering, "AI Models Transform Defect Inspection And Review, But Can Fail To Scale", 2026.6. <a class="back" href="#r6">↩</a></li>
+    </ol>
+  </section>
+
+</article>
+<nav class="chapter-nav" id="chapter-nav" aria-label="장 이동"></nav>
+</main>
+
+<script src="assets/book.js"></script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부록 C 용어집 — AI, 일의 문법을 바꾸다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('book-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t!=='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body data-chapter="glossary">
+
+<div class="progress"><span></span></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" aria-label="목차 열기" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+  </button>
+  <a class="topbar-title" href="index.html">부록 C · 용어집</a>
+  <button class="icon-btn theme-btn" aria-label="화면 모드 바꾸기 (밝게 · 세피아 · 어둡게)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="책 차례"></nav>
+<div class="scrim"></div>
+
+<main class="page">
+<article class="chapter">
+
+  <header class="chapter-head">
+    <div class="part">부록 C</div>
+    <h1>용어집</h1>
+    <p class="subtitle">본문에 나온 주요 용어 89개</p>
+  </header>
+
+  <p class="no-indent">가나다순으로 정리하고 영문 약어는 끝에 모았다. 각 설명 끝의 장 번호를 누르면 그 용어를 자세히 다룬 장으로 이동한다.</p>
+
+  <input class="gloss-search" type="search" placeholder="용어 검색 (예: 토큰, MCP, 수율)" aria-label="용어 검색">
+  <div class="gloss-count" aria-live="polite"></div>
+
+  <h2 class="gloss-h"><span class="t">ㄱ</span></h2>
+  <dl class="gloss">
+    <dt>가상 계측<small>virtual metrology</small></dt>
+    <dd>웨이퍼를 직접 측정하는 대신 장비 센서 데이터로 측정값을 예측하는 기술. <a class="ch" href="ch14.html">14장</a></dd>
+    <dt>가중치<small>weight</small></dt>
+    <dd>모델 안에 저장된 수천억~수조 개의 숫자. 학습을 통해 조정되며 모델이 배운 지식과 능력이 담긴다. <a class="ch" href="ch03.html">3장</a> <a class="ch" href="ch06.html">6장</a></dd>
+    <dt>강화학습<small>reinforcement learning</small></dt>
+    <dd>시도한 결과에 보상을 주어, 보상을 많이 받는 방향으로 모델을 조정하는 학습 방법. <a class="ch" href="ch07.html">7장</a> <a class="ch" href="ch08.html">8장</a></dd>
+    <dt>검증 가능한 보상을 이용한 강화학습<small>RLVR</small></dt>
+    <dd>정답 여부를 자동으로 확인할 수 있는 문제로 모델이 스스로 연습하게 하는 강화학습. 추론 모델 발전의 핵심 동력. <a class="ch" href="ch08.html">8장</a></dd>
+    <dt>고성능 AI</dt>
+    <dd>AI 기본법에서 학습 연산량이 일정 기준을 넘는 AI. 안전성 확보 의무가 부과된다. <a class="ch" href="ch15.html">15장</a></dd>
+    <dt>고영향 AI</dt>
+    <dd>AI 기본법에서 생명·안전·기본권에 큰 영향을 주는 분야(에너지, 보건의료, 채용, 대출 심사 등)의 AI. 위험 관리와 설명 의무가 있다. <a class="ch" href="ch15.html">15장</a></dd>
+    <dt>굿하트의 법칙<small>Goodhart&#x27;s law</small></dt>
+    <dd>측정치가 목표가 되면 더 이상 좋은 측정치가 아니라는 원리. 벤치마크 맞춤 최적화를 설명한다. <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>기반 모델<small>base model</small></dt>
+    <dd>사전학습만 마친 상태의 모델. 지식은 많지만 대화나 지시 따르기에는 서툴다. <a class="ch" href="ch07.html">7장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㄴ</span></h2>
+  <dl class="gloss">
+    <dt>네이티브 멀티모달<small>native multimodal</small></dt>
+    <dd>처음부터 글, 이미지, 소리, 영상을 함께 학습해 하나의 모델 안에서 처리하는 방식. <a class="ch" href="ch05.html">5장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㄷ</span></h2>
+  <dl class="gloss">
+    <dt>단계적 공개<small>staged release</small></dt>
+    <dd>최상위 모델을 먼저 검증된 기관에 제한 공개한 뒤 안전장치를 더해 일반에 여는 출시 방식. <a class="ch" href="ch02.html">2장</a> <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>디지털 옴니버스<small>Digital Omnibus</small></dt>
+    <dd>2026년 7월 발효된 EU AI법 개정. 고위험 AI 의무 적용 시점을 2027~2028년으로 늦췄다. <a class="ch" href="ch15.html">15장</a></dd>
+    <dt>디지털 트윈<small>digital twin</small></dt>
+    <dd>공장이나 설비를 가상 공간에 그대로 재현해 변경 효과를 미리 시뮬레이션하는 기술. <a class="ch" href="ch14.html">14장</a></dd>
+    <dt>딥페이크<small>deepfake</small></dt>
+    <dd>AI로 만든 가짜 얼굴, 목소리, 영상. 사기와 허위 정보에 악용된다. <a class="ch" href="ch05.html">5장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㄹ</span></h2>
+  <dl class="gloss">
+    <dt>라우터<small>router</small></dt>
+    <dd>전문가 혼합 모델에서 토큰마다 어떤 전문가에게 계산을 맡길지 정하는 부분. <a class="ch" href="ch09.html">9장</a></dd>
+    <dt>로봇 파운데이션 모델<small>robot foundation model</small></dt>
+    <dd>카메라 영상과 말로 된 지시를 받아 로봇의 움직임을 출력하는 범용 AI 모델. <a class="ch" href="ch12.html">12장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅁ</span></h2>
+  <dl class="gloss">
+    <dt>매개변수<small>parameter</small></dt>
+    <dd>모델의 크기를 나타내는 단위로, 가중치의 개수를 말한다. <a class="ch" href="ch03.html">3장</a> <a class="ch" href="ch06.html">6장</a></dd>
+    <dt>멀티모달<small>multimodal</small></dt>
+    <dd>글, 이미지, 음성, 영상 등 여러 형태의 정보를 함께 다루는 AI. <a class="ch" href="ch01.html">1장</a> <a class="ch" href="ch05.html">5장</a></dd>
+    <dt>메모리 벽<small>memory wall</small></dt>
+    <dd>연산 속도에 비해 메모리가 데이터를 공급하는 속도가 느려 칩 성능이 제한되는 현상. <a class="ch" href="ch11.html">11장</a> <a class="ch" href="ch12.html">12장</a></dd>
+    <dt>모델 라우팅<small>model routing</small></dt>
+    <dd>요청의 난이도와 성격에 따라 알맞은 모델로 자동 배분하는 구조. <a class="ch" href="ch03.html">3장</a></dd>
+    <dt>모델 붕괴<small>model collapse</small></dt>
+    <dd>AI가 만든 데이터로만 여러 세대 학습을 반복할 때 다양성이 사라지고 품질이 떨어지는 현상. <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>모라벡의 역설<small>Moravec&#x27;s paradox</small></dt>
+    <dd>사람에게 어려운 추론은 컴퓨터에 쉽고, 사람에게 쉬운 감각·운동은 컴퓨터에 어렵다는 관찰. <a class="ch" href="ch12.html">12장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅂ</span></h2>
+  <dl class="gloss">
+    <dt>바이브 코딩<small>vibe coding</small></dt>
+    <dd>원하는 것을 말로 설명하면 AI가 코드를 작성하는 방식. 비개발자의 도구 제작에 쓰인다. <a class="ch" href="ch04.html">4장</a></dd>
+    <dt>벤치마크<small>benchmark</small></dt>
+    <dd>AI의 능력을 비교하기 위한 표준 시험. <a class="ch" href="ch02.html">2장</a> <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>벤치마크 포화<small>benchmark saturation</small></dt>
+    <dd>AI가 시험에서 만점에 가까운 점수를 받아 더 이상 변별력이 없어지는 현상. <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>보상 해킹<small>reward hacking</small></dt>
+    <dd>AI가 과제를 제대로 풀지 않고 채점 방식의 허점을 노려 보상을 얻는 행동. <a class="ch" href="ch08.html">8장</a> <a class="ch" href="ch10.html">10장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅅ</span></h2>
+  <dl class="gloss">
+    <dt>사고의 사슬<small>Chain of Thought</small></dt>
+    <dd>AI가 답을 내기 전에 풀이 과정을 단계별로 쓰며 생각하는 방식. <a class="ch" href="ch08.html">8장</a></dd>
+    <dt>사전학습<small>pre-training</small></dt>
+    <dd>방대한 텍스트로 다음 토큰 예측을 학습하는 첫 단계. 모델의 기본 지식이 형성된다. <a class="ch" href="ch07.html">7장</a></dd>
+    <dt>사후학습<small>post-training</small></dt>
+    <dd>기반 모델을 지시 따르기, 대화, 추론에 맞게 다듬는 학습 단계. <a class="ch" href="ch07.html">7장</a></dd>
+    <dt>섀도 AI<small>shadow AI</small></dt>
+    <dd>회사가 승인하지 않은 AI 도구를 직원이 업무에 몰래 쓰는 것. <a class="ch" href="ch14.html">14장</a> <a class="ch" href="ch15.html">15장</a></dd>
+    <dt>소버린 AI<small>sovereign AI</small></dt>
+    <dd>자국의 데이터와 인프라로 자국이 통제할 수 있는 AI를 갖추려는 전략. <a class="ch" href="ch03.html">3장</a></dd>
+    <dt>소형 언어 모델<small>SLM</small></dt>
+    <dd>수십억 개 수준의 매개변수를 가진 작은 모델. 기기 안에서 돌릴 수 있다. <a class="ch" href="ch12.html">12장</a></dd>
+    <dt>수율<small>yield</small></dt>
+    <dd>생산한 칩 가운데 정상 제품의 비율. 반도체 제조 AI의 핵심 성과 지표. <a class="ch" href="ch14.html">14장</a></dd>
+    <dt>스케일링 법칙<small>scaling law</small></dt>
+    <dd>연산량, 데이터, 모델 크기를 늘리면 성능이 예측 가능하게 좋아진다는 경험 법칙. <a class="ch" href="ch07.html">7장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅇ</span></h2>
+  <dl class="gloss">
+    <dt>아첨<small>sycophancy</small></dt>
+    <dd>AI가 사용자가 듣기 좋아하는 답을 하며 무조건 동의하는 경향. <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>알고리즘 효율<small>algorithmic efficiency</small></dt>
+    <dd>같은 성능을 내는 데 필요한 연산량을 줄이는 기술 발전. <a class="ch" href="ch07.html">7장</a> <a class="ch" href="ch09.html">9장</a></dd>
+    <dt>양자화<small>quantization</small></dt>
+    <dd>가중치를 덜 정밀한 숫자로 저장해 메모리와 계산을 줄이는 기술. <a class="ch" href="ch09.html">9장</a> <a class="ch" href="ch12.html">12장</a></dd>
+    <dt>어텐션<small>attention</small></dt>
+    <dd>각 토큰이 문맥 속 다른 토큰에 얼마나 주목할지 정해 의미를 파악하는 트랜스포머의 핵심 메커니즘. <a class="ch" href="ch06.html">6장</a></dd>
+    <dt>에이전트<small>agent</small></dt>
+    <dd>목표를 받아 스스로 계획하고 도구를 써서 실행하며 결과를 확인하고 수정하는 AI. <a class="ch" href="ch04.html">4장</a> <a class="ch" href="ch08.html">8장</a></dd>
+    <dt>에이전트 루프<small>agent loop</small></dt>
+    <dd>목표 이해, 계획, 도구 사용, 관찰, 수정을 반복하는 에이전트의 작업 방식. <a class="ch" href="ch04.html">4장</a> <a class="ch" href="ch08.html">8장</a></dd>
+    <dt>예지 보전<small>predictive maintenance</small></dt>
+    <dd>센서 데이터로 장비 고장을 미리 예측해 정비하는 방식. <a class="ch" href="ch12.html">12장</a> <a class="ch" href="ch14.html">14장</a></dd>
+    <dt>오염<small>contamination</small></dt>
+    <dd>벤치마크 문제나 풀이가 학습 데이터에 섞여 점수가 부풀려지는 현상. <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>오픈 웨이트<small>open-weight</small></dt>
+    <dd>가중치를 공개해 누구나 내려받아 자체 서버에서 돌릴 수 있는 모델. <a class="ch" href="ch03.html">3장</a></dd>
+    <dt>온도<small>temperature</small></dt>
+    <dd>다음 토큰을 고를 때 무작위성의 정도를 조절하는 값. <a class="ch" href="ch06.html">6장</a></dd>
+    <dt>온디바이스 AI<small>on-device AI</small></dt>
+    <dd>스마트폰, PC 등 기기 안에서 직접 실행되는 AI. <a class="ch" href="ch12.html">12장</a></dd>
+    <dt>워터마크<small>watermark</small></dt>
+    <dd>AI 생성물에 심는 표시. 눈에 보이는 것과 보이지 않는 것이 있다. <a class="ch" href="ch05.html">5장</a> <a class="ch" href="ch15.html">15장</a></dd>
+    <dt>임베딩<small>embedding</small></dt>
+    <dd>토큰이나 문서의 의미를 수천 개의 숫자로 이루어진 좌표로 바꾼 것. <a class="ch" href="ch06.html">6장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅈ</span></h2>
+  <dl class="gloss">
+    <dt>작업 시간 지평<small>time horizon</small></dt>
+    <dd>숙련자가 몇 시간 걸리는 작업을 AI가 절반의 확률로 해내는지로 AI의 자율 작업 능력을 재는 지표. <a class="ch" href="ch04.html">4장</a></dd>
+    <dt>전문가 혼합<small>MoE, Mixture of Experts</small></dt>
+    <dd>모델 안의 여러 전문가 중 필요한 일부만 골라 계산하는 구조. 큰 모델을 싸게 운영하게 한다. <a class="ch" href="ch03.html">3장</a> <a class="ch" href="ch09.html">9장</a></dd>
+    <dt>정렬<small>alignment</small></dt>
+    <dd>AI가 사람이 의도한 대로 행동하게 만드는 일. <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>제번스의 역설<small>Jevons paradox</small></dt>
+    <dd>효율이 좋아져 비용이 떨어지면 사용량이 더 늘어나 총소비가 증가하는 현상. <a class="ch" href="ch09.html">9장</a></dd>
+    <dt>증류<small>distillation</small></dt>
+    <dd>큰 교사 모델의 출력으로 작은 학생 모델을 학습시키는 기술. <a class="ch" href="ch09.html">9장</a></dd>
+    <dt>지시 미세조정<small>instruction tuning</small></dt>
+    <dd>좋은 질문-답변 예시로 모델이 지시를 따르도록 학습시키는 사후학습 단계. <a class="ch" href="ch07.html">7장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅊ</span></h2>
+  <dl class="gloss">
+    <dt>책임 있는 확장 정책<small>RSP</small></dt>
+    <dd>위험 능력 평가 결과에 따라 보호 수준을 높이는 Anthropic의 안전 정책. <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>추론 강도<small>effort</small></dt>
+    <dd>AI가 답하기 전에 생각하는 양을 조절하는 설정. 품질과 비용을 함께 좌우한다. <a class="ch" href="ch02.html">2장</a> <a class="ch" href="ch07.html">7장</a></dd>
+    <dt>추론 모델<small>reasoning model</small></dt>
+    <dd>답을 내기 전에 내부적으로 긴 풀이 과정을 거치도록 훈련된 모델. <a class="ch" href="ch08.html">8장</a></dd>
+    <dt>추론 시간 연산<small>test-time compute</small></dt>
+    <dd>학습이 끝난 모델이 답할 때 생각하는 데 쓰는 연산. 늘릴수록 정확도가 오른다. <a class="ch" href="ch07.html">7장</a></dd>
+    <dt>추측 디코딩<small>speculative decoding</small></dt>
+    <dd>작은 모델이 초안을 쓰고 큰 모델이 한꺼번에 검토해 속도를 높이는 기술. <a class="ch" href="ch09.html">9장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅋ</span></h2>
+  <dl class="gloss">
+    <dt>컨텍스트 엔지니어링<small>context engineering</small></dt>
+    <dd>어떤 정보를 언제 컨텍스트에 넣고 뺄지 설계하는 일. <a class="ch" href="ch09.html">9장</a></dd>
+    <dt>컨텍스트 창<small>context window</small></dt>
+    <dd>모델이 한 번에 읽고 고려할 수 있는 토큰의 양. <a class="ch" href="ch02.html">2장</a> <a class="ch" href="ch09.html">9장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅌ</span></h2>
+  <dl class="gloss">
+    <dt>토크나이저<small>tokenizer</small></dt>
+    <dd>글을 토큰으로 쪼개는 도구. 모델마다 다르다. <a class="ch" href="ch06.html">6장</a></dd>
+    <dt>토큰<small>token</small></dt>
+    <dd>AI가 글을 읽고 쓰는 기본 단위. 가격과 컨텍스트 창의 단위이기도 하다. <a class="ch" href="ch06.html">6장</a></dd>
+    <dt>트랜스포머<small>Transformer</small></dt>
+    <dd>어텐션을 핵심으로 하는 신경망 구조. 2017년 구글 연구진이 제안했으며 오늘날 대부분의 언어 모델이 쓴다. <a class="ch" href="ch06.html">6장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅍ</span></h2>
+  <dl class="gloss">
+    <dt>파운데이션 모델<small>foundation model</small></dt>
+    <dd>방대한 데이터로 학습해 여러 용도로 쓸 수 있는 범용 대형 모델. <a class="ch" href="ch03.html">3장</a></dd>
+    <dt>프런티어 모델<small>frontier model</small></dt>
+    <dd>현재 최고 수준의 성능을 가진 최상위 모델. <a class="ch" href="ch02.html">2장</a></dd>
+    <dt>프롬프트 인젝션<small>prompt injection</small></dt>
+    <dd>AI가 읽는 데이터 안에 명령을 숨겨 AI를 조종하는 공격. <a class="ch" href="ch04.html">4장</a> <a class="ch" href="ch15.html">15장</a></dd>
+    <dt>프롬프트 캐싱<small>prompt caching</small></dt>
+    <dd>반복되는 입력의 계산 결과를 저장해 다시 쓰는 기술. 큰 할인이 적용된다. <a class="ch" href="ch09.html">9장</a></dd>
+    <dt>피지컬 AI<small>physical AI</small></dt>
+    <dd>로봇이나 자동차처럼 물리적인 몸을 가지고 현실 세계에서 작동하는 AI. <a class="ch" href="ch12.html">12장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">ㅎ</span></h2>
+  <dl class="gloss">
+    <dt>해석 가능성<small>interpretability</small></dt>
+    <dd>AI 모델 내부에서 어떤 계산과 개념이 작동하는지 밝히는 연구. <a class="ch" href="ch10.html">10장</a></dd>
+    <dt>헌법 기반 AI<small>Constitutional AI</small></dt>
+    <dd>원칙 목록을 주고 AI가 스스로 답을 평가·수정하게 하는 Anthropic의 학습 방법. <a class="ch" href="ch07.html">7장</a></dd>
+    <dt>환각<small>hallucination</small></dt>
+    <dd>AI가 그럴듯하지만 사실이 아닌 내용을 자신 있게 만들어 내는 현상. <a class="ch" href="ch06.html">6장</a> <a class="ch" href="ch15.html">15장</a></dd>
+    <dt>휴머노이드<small>humanoid</small></dt>
+    <dd>사람 모양의 로봇. <a class="ch" href="ch12.html">12장</a></dd>
+  </dl>
+  <h2 class="gloss-h"><span class="t">A–Z</span></h2>
+  <dl class="gloss">
+    <dt>A2A<small>Agent2Agent</small></dt>
+    <dd>에이전트와 다른 에이전트를 연결하는 표준. 구글이 시작했다. <a class="ch" href="ch04.html">4장</a></dd>
+    <dt>AGENTS.md</dt>
+    <dd>코딩 에이전트에게 프로젝트 규칙을 알려 주는 안내 파일 규격. OpenAI가 시작했다. <a class="ch" href="ch04.html">4장</a></dd>
+    <dt>API<small>Application Programming Interface</small></dt>
+    <dd>프로그램이 다른 서비스의 기능을 호출하는 통로. AI 모델은 주로 API로 제공된다. <a class="ch" href="ch02.html">2장</a></dd>
+    <dt>ASIC<small>맞춤형 반도체</small></dt>
+    <dd>특정 용도에 맞춰 설계한 칩. 구글 TPU, 아마존 Trainium 등이 해당한다. <a class="ch" href="ch11.html">11장</a></dd>
+    <dt>C2PA</dt>
+    <dd>콘텐츠의 생성·편집 이력을 위조 방지 정보로 기록하는 국제 표준. <a class="ch" href="ch05.html">5장</a></dd>
+    <dt>CUDA</dt>
+    <dd>엔비디아 GPU로 범용 계산을 할 수 있게 한 개발 도구. 엔비디아의 핵심 경쟁력. <a class="ch" href="ch11.html">11장</a></dd>
+    <dt>EDA<small>Electronic Design Automation</small></dt>
+    <dd>반도체 설계 자동화 소프트웨어. 2026년 AI 에이전트가 도입되기 시작했다. <a class="ch" href="ch13.html">13장</a> <a class="ch" href="ch14.html">14장</a></dd>
+    <dt>FLOP</dt>
+    <dd>부동소수점 연산 1회. AI 학습에 쓴 연산량의 단위로 쓰인다. <a class="ch" href="ch07.html">7장</a> <a class="ch" href="ch15.html">15장</a></dd>
+    <dt>GPU<small>Graphics Processing Unit</small></dt>
+    <dd>대량의 단순 계산을 동시에 처리하는 칩. AI 학습과 추론의 핵심 장비. <a class="ch" href="ch11.html">11장</a></dd>
+    <dt>HBM<small>High Bandwidth Memory</small></dt>
+    <dd>D램을 여러 층 쌓아 GPU 옆에 붙인 고대역폭 메모리. 한국 기업이 시장을 주도한다. <a class="ch" href="ch11.html">11장</a></dd>
+    <dt>LLM<small>Large Language Model</small></dt>
+    <dd>대규모 언어 모델. ChatGPT, Claude, Gemini의 핵심 기술. <a class="ch" href="ch06.html">6장</a></dd>
+    <dt>MCP<small>Model Context Protocol</small></dt>
+    <dd>AI와 외부 도구·데이터를 연결하는 개방형 표준. &#x27;AI를 위한 USB-C&#x27;로 불린다. <a class="ch" href="ch04.html">4장</a></dd>
+    <dt>NPU<small>Neural Processing Unit</small></dt>
+    <dd>기기 안에서 AI 계산을 처리하는 전용 칩. <a class="ch" href="ch12.html">12장</a></dd>
+    <dt>RAG<small>Retrieval-Augmented Generation</small></dt>
+    <dd>질문과 관련된 문서를 찾아 그 내용을 근거로 답하게 하는 기술. 사내 문서 챗봇의 기반. <a class="ch" href="ch06.html">6장</a></dd>
+    <dt>RLHF<small>Reinforcement Learning from Human Feedback</small></dt>
+    <dd>사람이 더 나은 답을 고르게 하고 그 선호에 맞춰 모델을 조정하는 학습 방법. <a class="ch" href="ch07.html">7장</a></dd>
+    <dt>RTL<small>Register Transfer Level</small></dt>
+    <dd>반도체 회로의 동작을 기술하는 설계 단계와 그 코드. <a class="ch" href="ch13.html">13장</a> <a class="ch" href="ch14.html">14장</a></dd>
+    <dt>TOPS</dt>
+    <dd>초당 1조 회 연산. NPU 성능을 나타내는 단위. <a class="ch" href="ch12.html">12장</a></dd>
+    <dt>TPU<small>Tensor Processing Unit</small></dt>
+    <dd>구글이 자체 개발한 AI 전용 칩. <a class="ch" href="ch11.html">11장</a></dd>
+  </dl>
+
+</article>
+<nav class="chapter-nav" id="chapter-nav" aria-label="장 이동"></nav>
+</main>
+
+<script src="assets/book.js"></script>
+<script>
+(() => {
+  const input = document.querySelector('.gloss-search');
+  const count = document.querySelector('.gloss-count');
+  const dts = [...document.querySelectorAll('dl.gloss dt')];
+  const total = dts.length;
+  function filter() {
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+    dts.forEach(dt => {
+      const dd = dt.nextElementSibling;
+      const hit = !q || (dt.textContent + ' ' + dd.textContent).toLowerCase().includes(q);
+      dt.hidden = dd.hidden = !hit;
+      if (hit) shown++;
+    });
+    document.querySelectorAll('dl.gloss').forEach(dl => {
+      const any = [...dl.querySelectorAll('dt')].some(dt => !dt.hidden);
+      dl.hidden = !any;
+      dl.previousElementSibling.hidden = !any;
+    });
+    count.textContent = q ? `${shown}개 / 전체 ${total}개` : `전체 ${total}개`;
+  }
+  input.addEventListener('input', filter);
+  filter();
+})();
+</script>
+</body>
+</html>
